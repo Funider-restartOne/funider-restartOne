@@ -1,0 +1,88 @@
+/***********************
+********* stories CSS Start ******
+************************/
+@import url('https://fonts.googleapis.com/css?family=Fjalla+One');
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
+@import url('https://fonts.googleapis.com/css?family=Baloo+Bhaina');
+@import url('https://fonts.googleapis.com/css?family=Baloo+Bhaina&subset=latin-ext,oriya,vietnamese');
+.form-stories input{
+    font-weight: bold;
+}
+.form-comment{
+    float: right;
+    background-color: yellow;
+}
+.form-comment textArea{
+    margin-left: 5px;
+}
+.form-comment-button{
+    margin-right: 75px;
+    margin-top: 15px;
+}
+.comment-box p{
+   font-family: 'Quicksand', sans-serif; 
+}
+.stories-story-box p, h2{
+     font-family: 'Quicksand', sans-serif;
+}
+.comment-box{
+    background-color: white;   
+    box-shadow: rgba(0, 0, 0, 0.3) 7px 7px 7px;
+    border-bottom: 1px rgba(0, 0, 0, 0.3) solid;
+}
+.button-story-post{
+    margin-top: 0px;
+    margin-right: 2px;
+    margin-left: 2px;
+    margin-bottom: 15px;
+}
+.text-area-story{
+    border-radius: 8px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;	
+    width: 100%;
+}
+/***********************
+********* stories input file camera ******
+************************/
+
+.element {
+  display: inline-flex;
+  align-items: center;
+}
+i.fa-camera {
+  margin: 10px;
+  cursor: pointer;
+  font-size: 30px;
+}
+i:hover {
+  opacity: 0.6;
+}
+input {
+  display: none;
+}
+/***********************
+********* /stories input file camera ******
+************************/
+
+/***********************
+********* stories CSS End ******
+************************/
+/***********************
+********* /stories hide/undide commens ******
+************************/
+
+.stories-comment-display{
+    display: block;
+    
+}
+.hide-unhide-button:onclick ~ .stories-comment-display{
+    display: block;
+}
+
+
+
+/***********************
+********* /stories hide/undide commens ******
+************************/

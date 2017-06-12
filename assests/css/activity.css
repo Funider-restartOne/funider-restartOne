@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
+@import url('https://fonts.googleapis.com/css?family=Baloo+Bhaina');
+@import url('https://fonts.googleapis.com/css?family=Fjalla+One');
+
+.activities-display-box{
+   background-color: #F3E2BE;
+   border-left: 1px #555555 solid;
+   
+   
+}
+.activity-box{
+    background-color: white;
+    margin: 1px 20px 1px 20px;
+    border: 1px #445588 solid;
+    border-radius: 6px;
+    box-shadow: 10px 10px 5px grey;
+}
+.form-activity{    
+    margin: 0px auto;
+    text-align: center;
+}
+.form-create-activity input{
+    width: 100%;
+}
+#form-create-activity-btn{
+    width: 100px;
+    margin-left: 71px;
+}
+.right-activity p, table{
+    font-family: 'Quicksand', sans-serif;
+    
+}
+
+
+

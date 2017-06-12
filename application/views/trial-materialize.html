@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<!--post materialize--> 
+          <div class="container-fluid"> 
+            <div class="row">
+              <div class="card-panel teal lighten-2">
+                <p id="content_belongs_to">Eyobiel Fissehaye </p>
+                <p>Stories dgffh gfhds gfhdsfgds gfhdgsfgd sfh fhgdhgfdsgf fghdgf ds ghfgd</p>
+              </div>
+<!--Comments accordion......................................................--> 
+              <ul class="collapsible" data-collapsible="expandable">
+                <li>
+                  <div class="collapsible-header">
+                    <i class="material-icons">chat_bubble_outline</i>Comments
+                  </div>
+                  <div class="collapsible-body"><p>
+<!--Add Comments Form......................................................-->
+                      <div id="comments">
+                        <div class="row" id="post">
+                          <form class="col s12" action="process.php" method="post">
+                            <input type="hidden" name="comment" value="comment">
+                            <input type="hidden" name="post_id">
+                            <div class="row">
+                              <div class="input-field col s8">
+                                <textarea id="textarea1" class="materialize-textarea" name="comment_content"></textarea>
+                                <label for="textarea1">What do you have to say about this?</label>
+                              </div>
+                            </div>
+                              <button class="btn waves-effect waves-light" type="submit" name="submit">Post </button>
+                          </form>
+                        </div>
+          <!-- Actual comments content displayed from here below ..................-->
+                        <div class="row">
+                          <div class="col s8">
+                            <div class="card-panel">
+                              <span class='blue-text text-darken-2'>commented by Eyobiel <br> created at june 4</span>
+                              <p>i like the post it is pretty interesting</p>"; 
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                  </p></div>
+                </li>
+              </ul>
+            </div>
+          </div>     
+
+            <!--/post materialize--> 
+            <textarea class="textarea text-area-story" name="title" placeholder="Edit your title" rows="1" cols="60%"></textarea>
+                      <textarea class="textarea text-area-story" name="message" placeholder="Edit your story" rows="1" cols="60%"></textarea>
+
+</body>
+</html>
