@@ -465,6 +465,25 @@ class Activity extends CI_Controller
 		return $chat;
 		}
 
+		public function get_comier_chat(){
+		$chat['result'] = $this->get_all_chat();
+		for ($i=0; $i < count($chat['result']); $i++) { 
+        if ($this->session->userdata('user_id') === 
+          $chat['result'][$i]['users_id']) {
+              $class_name = "user-message";
+            }else{
+              $class_name = "normal-message";
+            }
+            echo '<div class="'.$class_name.' col-lg-12">
+                    <h3>'.$chat['result'][$i]['first_name'].' '.$chat['result'][$i]['first_name']  .'</h3>
+                    <p>'.$chat['result'][$i]['chat'].'</p>
+                    <p>'.$chat['result'][$i]['created_at'].'</p>
+                  </div>';
+             }
+              $last = end($chat['result'])['chat'];
+              $this->session->set_userdata(['last'=>$last]);
+		}
+
 		public function insert_chat(){
 		$this->load->model('User');
 		$data= $this->input->post(NULL ,true);
@@ -489,7 +508,7 @@ class Activity extends CI_Controller
 		if ($last_nor !== $last) {
 			echo "not equal";
 			echo '<script type="text/javascript">
-				    $( ".here" ).load("/index.php/Activity/get_chat");
+				    $( ".here" ).load("/index.php/Activity/get_comier_chat");
 				  </script>
 				  <script type="text/javascript">
 					$(".here").animate({ scrollTop: 100000000000});
