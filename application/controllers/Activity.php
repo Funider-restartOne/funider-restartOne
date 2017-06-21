@@ -519,6 +519,77 @@ class Activity extends CI_Controller
 		}
 	}
 
+
+
+
+
+
+	public function map(){
+		$data = array('result' =>$this->one_activity(),
+					  'map' => $this->print_map()
+		);
+		if ($data['result'][0]['type_of_activity'] === NULL) {
+			redirect('/');
+		}else{
+			$this->load->view('/oneActivity.php',['data'=> $data]);
+		}
+	}
+
+	public function print_map(){
+		$this->load->model('User');
+		$this->load->library('googlemaps');
+		$postcode = $this->one_activity();
+
+		$config['center'] = "'".$postcode[0]['Postcode']."'";
+		$config['zoom'] = '18';
+		$this->googlemaps->initialize($config);
+
+		$marker = array();
+		$marker['position'] = "'".$postcode[0]['Postcode']."'";
+		$this->googlemaps->add_marker($marker);
+		$data['map'] = $this->googlemaps->create_map();
+		return $data;
+
+	}
+
+	public function one_activity(){
+		$this->load->model('User');
+			$posts=array();
+			$data= $this->input->post(NULL ,true);
+			$data=$this->User->get_one_activity($data);
+			for ($i=0; $i <count($data) ; $i++) 
+			{
+				array_push($posts
+				,array(
+				'id_users_activity'=>$data[$i]['id_users_activity'],
+				'type_of_activity'=>$data[$i]['type_of_activity'],
+				'title'=>$data[$i]['title'],
+				'activity_date'=>$data[$i]['activity_date'],
+				'start_time'=>$data[$i]['start_time'],
+				'end_time'=>$data[$i]['end_time'],
+				'meeting_address'=>$data[$i]['meeting_address'],
+				'Postcode'=>$data[$i]['Postcode'],
+				'Description'=>$data[$i]['Description'],
+				'id'=>$data[$i]['id'],
+				'Participants'=>$this->User->get_Participants($data[$i]['id']),
+				'getParticipants'=>$this->User->get_all_Participants($data[$i]['id'])
+				)
+			);
+			}
+			return $posts;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
 		//logoff
 		public function logoff(){
 			$this->session->sess_destroy();

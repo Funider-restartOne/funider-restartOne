@@ -188,6 +188,16 @@ class User extends CI_Model
 		return $this->db->query($query,$values);
 		}
 	}
+
+	public function get_one_activity($data){
+		if (empty($data)) {
+			 return 0;
+		}else{
+		$query = 'SELECT * FROM activities where id=?';
+		$values = $data['activity_id'];
+		return $this->db->query($query,$values)->result_array();
+		}
+	}
 	//this is contact method (send email)
 	/*
 	public function contact()

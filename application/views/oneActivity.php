@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>navbar</title>
-  <!-- Latest compiled and minified CSS -->
+	<title><?php for ($i=0; $i <count($data['result']) ; $i++) { echo $data['result'][$i]['title']; }?></title>
+	<!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
 <!-- Optional theme -->
@@ -10,7 +10,9 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
  
 <link rel="stylesheet" href="/assests/css/style.css" type="text/css">
-
+	<?= $data['map']['map']['js']; ?>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbkD511n17yo1FAPojJ-8lK2-S3YYXIIs&callback=initMap"
+  type="text/javascript"></script>
 </head>
 <body>
 <header>
@@ -211,111 +213,34 @@
                   </ul>
               </div>
             </div>
-
         </div>
-        <div class="right-activity col-md-9">
+        <div class="right-activity col-md-9" style='padding-left: 20px; margin-bottom: 20px;'>
             <div class="row">
-                <div class="jumbotron">
-                    <h2>Activities</h2>
-                    <p>Here you can create your own activities or join already created activities</p>
-                </div>             
-                
-            <!--form table-->
-                <div class= "col-md-5" id="create-tableg" style="display: block;">
-                    <form action="/index.php/Activity/insert_activity" method="post" name="create-activity" class="form-create-activity">
-                    <?php if ($this->session->userdata('user_id')){ ?>
-                        <table class="table-create-activity" cellpadding="2" width="20%" bgcolor="99FFFF" align="center"
-                        cellspacing="2">
-                          <tr>
-                          <td colspan=2>
-                          <center><font size=4><b>Create Activity Form</b></font></center>
-                          </td>
-                          </tr>
-                          
-                            
-                          
-                          <tr>
-                          <td>Type Of Activity</td>
-                          <td><select name="taskOption">
-                          <option value="-1" selected>Select activity</option>
-                          <option value="football">Football</option>
-                          <option value="basketball">Basketball</option>
-                          <option value="running">Running</option>
-                          <option value="cycling">Cycling</option>
-                          <option value="hockey">Hockey</option>
-                          <option value="bowling">Bowling</option>
-                          </select></td>
-                          </tr>
-
-
-                          <tr>
-                          <td>Title</td>
-                          <td><input type="text" name="title_name" id="titlename" size="30"></td>
-                          </tr>
-                          <tr>
-                          <td>Start Date</td>
-                          <td><input type="date" name="data_activity" data-date-inline-picker="true" /></td>
-                          </tr>
-                          <tr>
-                          <td>Start Time</td>
-                          <td><input type="time" time-time-inline-picker="true" name="start_time" /></td>
-                          </tr>
-                          <tr>
-                          <td>End Time</td>
-                          <td><input type="time" time-time-inline-picker="true" name="end_time" /></td>
-                          </tr>
-                          <tr>
-                          <td>Meeting address</td>
-                          <td><input type="text" name="meeting_address" id="place" size="30"></td>
-                          </tr>
-                          <tr>
-                          <td>Postcode</td>
-                          <td><input type="text" name="post_code" id="post-code" size="30"></td>
-                          </tr>
-                          <tr>
-                          <td>Description</td>
-                          <td><textarea name="description" id="personaladdress" rows="2" cols="40" placeholder="Description here..."></textarea>
-                          </td>
-                          </tr>
-                          <br>
-                          <tr>         
-                          <td colspan="2"><input type="submit" id="form-create-activity-btn" name="createActivitySubmit" value="Submit Form" /></td>
-                          </tr>
-                          
-                        </table>
-                        <?php }else{ ?>
-                            <h2><a class="text-center" href="/index.php/Activity/register_page" class="">Register</a> now and create your own sport</h2>
-                          <?php } ?>
-                    </form>
-                </div>
-            <!--/form-->
-
-            <div class="col-md-7 activities-display-box">
-                <h2>Scheduled Activity</h2>
-                <?php for ($i=0; $i <count($posts['result']) ; $i++) { ?>
-                <div class="col-md-3 activity-box">
-                <form action="/index.php/Activity/map" method="post">
-                    <button><p><?= $posts['result'][$i]['type_of_activity'] ?></p></button> 
-                    <p><?= $posts['result'][$i]['activity_date'] ?></p> 
-                    <p><?= $posts['result'][$i]['start_time']." - ".$posts['result'][$i]['end_time'] ?></p> 
-                    <p><?= $posts['result'][$i]['getParticipants'] ?>:Participants</p>
-                    <input type="hidden" name="activity_id" value="<?= $posts['result'][$i]['id'] ?>">
-                </form>
+<?php for ($i=0; $i <count($data['result']) ; $i++) { ?>
+                	<h2><?= $data['result'][$i]['title'] ?></h2>
+                    <p>type of activity : <?= $data['result'][$i]['type_of_activity'] ?></p>
+                    <p>activity date : <?= $data['result'][$i]['activity_date'] ?></p> 
+                    <p>start and end time : <?= $data['result'][$i]['start_time']." - ".$data['result'][$i]['end_time'] ?></p> 
+                    <p>address : <?= $data['result'][$i]['meeting_address'] ?></p>
+                    <p>post code : <?= $data['result'][$i]['Postcode'] ?></p>
+                    <p> Description : <?= $data['result'][$i]['Description'] ?></p>
+                    <p><?= $data['result'][$i]['getParticipants'] ?>:Participants</p>
+                    <input type="hidden" name="activity_id" value="<?= $data['result'][$i]['id'] ?>">
                     <?php 
-                    for ($j=0; $j <count($posts['result'][$i]['Participants']) ; $j++) { 
+                    for ($j=0; $j <count($data['result'][$i]['Participants']) ; $j++) { 
                     if ($this->session->userdata('user_id')){
                       
-                      if ($posts['result'][$i]['Participants'] === "not going") {
+                      if ($data['result'][$i]['Participants'] === "not going") {
                         ?>
                     <form  class="form-inline form-activity" action="/index.php/Activity/insert_Participants" method="post">
-                      <button type="submit" name="im_going" class="btn btn-default"><i class="fa fa-user-plus" aria-hidden="true"></i></button>
-                      <input type="hidden" name="activity_id" value="<?= $posts['result'][$i]['id'] ?>">
+                      <button style='margin-bottom: 20px;' type="submit" name="im_going" class="btn btn-default"><i class="fa fa-user-plus" aria-hidden="true"></i></button>
+                      <input  type="hidden" name="activity_id" value="<?= $data['result'][$i]['id'] ?>">
                     </form>
                     <?php 
                       }else{
                      ?><form action="/index.php/Activity/delete_Participants" method="post" >
-                      <button type="submit" name="im_not_going" class="btn btn-default"><i class="fa fa-user-times" aria-hidden="true"></i></button>
-                      <input type="hidden" name="activity_id" value="<?=$posts['result'][$i]['id']?>">
+                      <button style='margin-bottom: 20px;' type="submit" name="im_not_going" class="btn btn-default"><i class="fa fa-user-times" aria-hidden="true"></i></button>
+                      <input type="hidden" name="activity_id" value="<?=$data['result'][$i]['id']?>">
                     </form>
                     
                         <?php
@@ -323,24 +248,12 @@
                       }
                       }
                   ?>
-                </div>
+                  <?= $data['map']['map']['html']; ?>
                 <?php } ?>
+              </div>
             </div>
- 
             </div>
-
-        </div>
-<!--form-->
-         
-
-    </div>
-</div>
-<!-- side -Bar -->
-
-<!-- /side -Bar -->
-
-<!-- footer -->
- <footer id="footer" class="midnight-blue">
+    <footer id="footer" class="midnight-blue">
         <div class="container">
             <div class="row">
                 <div class="col-sm-6">
@@ -357,17 +270,6 @@
                 </div>
             </div>
         </div>
-    </footer><!--/#footer-->
-<!-- /footer -->
-
-
-<script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<script src="/assests/javascript/carousel.js"></script>
-
-</body>
-</html>
+    </footer>
+                </body>
+                </html>
