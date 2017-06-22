@@ -104,7 +104,7 @@
           } ?>
           </div>
           
-          <p class="forgot"><a href="#">Forgot Password?</a></p>
+          <p class="forgot"><a href="/index.php/Activity/forget_password">Forgot Password?</a></p>
           <button type="submit" name="loginSubmit" class="button button-block" value="Submit" />Log In</button>
           
           <p class="footInfo">Don't have an account? <a href="#" onclick="register_onClick()">Register here</a></p>

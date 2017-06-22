@@ -580,15 +580,85 @@ class Activity extends CI_Controller
 	}
 
 
+	public function forget_password(){
+		$this->load->view('/email.php');
+	}
 
 
+	public function check_email(){
+		$this->load->model('User');
+		$data = $this->input->post(NULL ,true);
+		$this->session->set_userdata(['r_email'=>$data['email']]);
+			$check = $this->User->check_email($data);
+			if ($check) {
+				$characters = '0123456789abccdefghijklmnopkrstuvwxyzABCCDEFGHIJKLMNOPKRSTUVWXYZ';
+				$code = '';
+				for ($i=0; $i <10 ; $i++) { 
+					$code .= $characters[rand(0, strlen($characters)-1)];
+				}
+				$this->User->update_code($code);
+				$code_message = "Hello ".$this->session->userdata('r_email')." 
+				Someone has requested a code to change your password. You can do this through this code below.\r\n
+				your code : ".$code."\r\n
+				If you didn't request this, please ignore this email.\r\n
+				Your password won't change until you enter this code above and create a new one.
+				";
+				$this->load->library('email');
+				
+				$this->email->from('anas@restart.network', 'Activity Team');
+				$this->email->to($this->session->userdata('r_email'));
+				//$this->email->cc('another@another-example.com');
+				//$this->email->bcc('them@their-example.com');
+				$this->email->set_header('Header1', 'Value1');
+				$this->email->subject('your code is');
+				$this->email->message($code_message);
+
+				$result = $this->email->send();
+				if ($result) {
+					$this->load->view('/code.php');
+				}else{
+					echo($this->email->print_debugger());
+				}
+			}else{
+				$error = 'this email dose not exist';
+				$this->load->view('/email.php',['error'=>$error]);
+			}
+		
+	}
 
 
+		public function check_code(){
+			$this->load->model('User');
+			$data = $this->input->post(NULL ,true);
+				$check = $this->User->check_code($data);
+				if ($check){
+					$this->load->view('/new_password.php');
+				}else{
+					$error ='this code is incorrect';
+					$this->load->view('/code.php',['error'=>$error]);
+				}
+		}
 
+		public function set_new_password(){
+			$this->load->library('form_validation');
+			$this->load->model('User');
+			$data= $this->input->post(NULL ,true);
 
-
-
-
+			$info = $data['email'];
+			$password =$this->input->post('password' ,true);
+			$conf_password =$this->input->post('conf_password' ,true);
+			if (strlen($password)<8) {
+				$info = $error1 = "enter an password more than 8 chars";
+				$this->load->view('/new_password.php',['error1'=>$error1]);
+			}elseif ($password !== $conf_password) {
+				$error = "you must confirm you password";
+				$this->load->view('/new_password.php',['error'=>$error]);
+			}
+			else{
+				$this->User->new_password($data);
+				redirect('/');
+			}
+		}
 
 		//logoff
 		public function logoff(){
