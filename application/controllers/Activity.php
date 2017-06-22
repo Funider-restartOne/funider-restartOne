@@ -100,17 +100,17 @@ class Activity extends CI_Controller
             	$error="Your email exist.";
             	$this->load->view('/registration.php',['error'=> $error]);
         	}elseif (count($email) == 0){
-				$this->form_validation->set_rules('first_name','first_name','trim|required|min_length[3]',array('required'=>'you must enter your first name','min_length[3]'=>'enter an text more than 3 chars'));
+				$this->form_validation->set_rules('first_name','first name','trim|required|min_length[3]',array('required'=>'you must enter your first name','min_length[3]'=>'enter an text more than 3 chars'));
 
-				$this->form_validation->set_rules('last_name','last_name','trim|required|min_length[3]',array('required'=>'you must enter your last name','min_length[3]'=>'enter an text more than 3 chars'));
+				$this->form_validation->set_rules('last_name','last name','trim|required|min_length[3]',array('required'=>'you must enter your last name','min_length[3]'=>'enter an text more than 3 chars'));
 
-				$this->form_validation->set_rules('post_code','post_code','trim|required|min_length[6]',array('required'=>'you must enter your post code','min_length[6]'=>'enter valid post code'));
+				$this->form_validation->set_rules('post_code','post code','trim|required|min_length[6]',array('required'=>'you must enter your post code','min_length[6]'=>'enter valid post code'));
 
 				$this->form_validation->set_rules('email','Email','trim|required|valid_email',array('required'=>'you must enter your  email','valid_email'=>'enter valid email'));
 
 				$this->form_validation->set_rules('password','Password','trim|required|min_length[8]',array('required'=>'you must enter your password','min_length[8]'=>'enter an password more than 8 chars'));
 
-				$this->form_validation->set_rules('conf_password','conf_password','trim|required|matches[password]',array('required'=>'you must confirm you password ','matches[password]'=>'no match'));
+				$this->form_validation->set_rules('conf_password','confirm password','trim|required|matches[password]',array('required'=>'you must confirm you password ','matches[password]'=>'no match'));
 
 				if ($this->form_validation->run()==false)
 				{

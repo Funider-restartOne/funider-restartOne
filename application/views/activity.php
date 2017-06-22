@@ -213,7 +213,7 @@
             </div>
 
         </div>
-        <div class="right-activity col-md-9">
+        <div class="right-activity col-md-9 col-sm-12">
             <div class="row">
                 <div class="jumbotron">
                     <h2>Activities</h2>

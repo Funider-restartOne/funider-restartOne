@@ -35,6 +35,7 @@
       margin-top: 10px;
       margin-bottom: 10px;
       margin-left: 20px; 
+      clear: both;
     }
     .normal-message{
       background: #EFF0F1;
