@@ -100,17 +100,17 @@ class Activity extends CI_Controller
             	$error="Your email exist.";
             	$this->load->view('/registration.php',['error'=> $error]);
         	}elseif (count($email) == 0){
-				$this->form_validation->set_rules('first_name','first_name','trim|required|min_length[3]',array('required'=>'you must enter your first name','min_length[3]'=>'enter an text more than 3 chars'));
+				$this->form_validation->set_rules('first_name','first name','trim|required|min_length[3]',array('required'=>'you must enter your first name','min_length[3]'=>'enter an text more than 3 chars'));
 
-				$this->form_validation->set_rules('last_name','last_name','trim|required|min_length[3]',array('required'=>'you must enter your last name','min_length[3]'=>'enter an text more than 3 chars'));
+				$this->form_validation->set_rules('last_name','last name','trim|required|min_length[3]',array('required'=>'you must enter your last name','min_length[3]'=>'enter an text more than 3 chars'));
 
-				$this->form_validation->set_rules('post_code','post_code','trim|required|min_length[6]',array('required'=>'you must enter your post code','min_length[6]'=>'enter valid post code'));
+				$this->form_validation->set_rules('post_code','post code','trim|required|min_length[6]',array('required'=>'you must enter your post code','min_length[6]'=>'enter valid post code'));
 
 				$this->form_validation->set_rules('email','Email','trim|required|valid_email',array('required'=>'you must enter your  email','valid_email'=>'enter valid email'));
 
 				$this->form_validation->set_rules('password','Password','trim|required|min_length[8]',array('required'=>'you must enter your password','min_length[8]'=>'enter an password more than 8 chars'));
 
-				$this->form_validation->set_rules('conf_password','conf_password','trim|required|matches[password]',array('required'=>'you must confirm you password ','matches[password]'=>'no match'));
+				$this->form_validation->set_rules('conf_password','confirm password','trim|required|matches[password]',array('required'=>'you must confirm you password ','matches[password]'=>'no match'));
 
 				if ($this->form_validation->run()==false)
 				{
@@ -518,6 +518,147 @@ class Activity extends CI_Controller
 			echo "equal";
 		}
 	}
+
+
+
+
+
+
+	public function map(){
+		$data = array('result' =>$this->one_activity(),
+					  'map' => $this->print_map()
+		);
+		if ($data['result'][0]['type_of_activity'] === NULL) {
+			redirect('/');
+		}else{
+			$this->load->view('/oneActivity.php',['data'=> $data]);
+		}
+	}
+
+	public function print_map(){
+		$this->load->model('User');
+		$this->load->library('googlemaps');
+		$postcode = $this->one_activity();
+
+		$config['center'] = "'".$postcode[0]['Postcode']."'";
+		$config['zoom'] = '18';
+		$this->googlemaps->initialize($config);
+
+		$marker = array();
+		$marker['position'] = "'".$postcode[0]['Postcode']."'";
+		$this->googlemaps->add_marker($marker);
+		$data['map'] = $this->googlemaps->create_map();
+		return $data;
+
+	}
+
+	public function one_activity(){
+		$this->load->model('User');
+			$posts=array();
+			$data= $this->input->post(NULL ,true);
+			$data=$this->User->get_one_activity($data);
+			for ($i=0; $i <count($data) ; $i++) 
+			{
+				array_push($posts
+				,array(
+				'id_users_activity'=>$data[$i]['id_users_activity'],
+				'type_of_activity'=>$data[$i]['type_of_activity'],
+				'title'=>$data[$i]['title'],
+				'activity_date'=>$data[$i]['activity_date'],
+				'start_time'=>$data[$i]['start_time'],
+				'end_time'=>$data[$i]['end_time'],
+				'meeting_address'=>$data[$i]['meeting_address'],
+				'Postcode'=>$data[$i]['Postcode'],
+				'Description'=>$data[$i]['Description'],
+				'id'=>$data[$i]['id'],
+				'Participants'=>$this->User->get_Participants($data[$i]['id']),
+				'getParticipants'=>$this->User->get_all_Participants($data[$i]['id'])
+				)
+			);
+			}
+			return $posts;
+	}
+
+
+	public function forget_password(){
+		$this->load->view('/email.php');
+	}
+
+
+	public function check_email(){
+		$this->load->model('User');
+		$data = $this->input->post(NULL ,true);
+		$this->session->set_userdata(['r_email'=>$data['email']]);
+			$check = $this->User->check_email($data);
+			if ($check) {
+				$characters = '0123456789abccdefghijklmnopkrstuvwxyzABCCDEFGHIJKLMNOPKRSTUVWXYZ';
+				$code = '';
+				for ($i=0; $i <10 ; $i++) { 
+					$code .= $characters[rand(0, strlen($characters)-1)];
+				}
+				$this->User->update_code($code);
+				$code_message = "Hello ".$this->session->userdata('r_email')." 
+				Someone has requested a code to change your password. You can do this through this code below.\r\n
+				your code : ".$code."\r\n
+				If you didn't request this, please ignore this email.\r\n
+				Your password won't change until you enter this code above and create a new one.
+				";
+				$this->load->library('email');
+				
+				$this->email->from('anas@restart.network', 'Activity Team');
+				$this->email->to($this->session->userdata('r_email'));
+				//$this->email->cc('another@another-example.com');
+				//$this->email->bcc('them@their-example.com');
+				$this->email->set_header('Header1', 'Value1');
+				$this->email->subject('your code is');
+				$this->email->message($code_message);
+
+				$result = $this->email->send();
+				if ($result) {
+					$this->load->view('/code.php');
+				}else{
+					echo($this->email->print_debugger());
+				}
+			}else{
+				$error = 'this email dose not exist';
+				$this->load->view('/email.php',['error'=>$error]);
+			}
+		
+	}
+
+
+		public function check_code(){
+			$this->load->model('User');
+			$data = $this->input->post(NULL ,true);
+				$check = $this->User->check_code($data);
+				if ($check){
+					$this->load->view('/new_password.php');
+				}else{
+					$error ='this code is incorrect';
+					$this->load->view('/code.php',['error'=>$error]);
+				}
+		}
+
+		public function set_new_password(){
+			$this->load->library('form_validation');
+			$this->load->model('User');
+			$data= $this->input->post(NULL ,true);
+
+			$info = $data['email'];
+			$password =$this->input->post('password' ,true);
+			$conf_password =$this->input->post('conf_password' ,true);
+			if (strlen($password)<8) {
+				$info = $error1 = "enter an password more than 8 chars";
+				$this->load->view('/new_password.php',['error1'=>$error1]);
+			}elseif ($password !== $conf_password) {
+				$error = "you must confirm you password";
+				$this->load->view('/new_password.php',['error'=>$error]);
+			}
+			else{
+				$this->User->new_password($data);
+				redirect('/');
+			}
+		}
 
 		//logoff
 		public function logoff(){

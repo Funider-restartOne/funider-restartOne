@@ -24,8 +24,8 @@ class User extends CI_Model
 
 	//sign up method
 	public function insert_user($data) {
-		$query = "INSERT INTO users (first_name, last_name, post_code, email, password, created_at, updated_at) values (?,?,?,?,?,NOW(),NOW())";
-		$values = [$data['first_name'], $data['last_name'], $data['post_code'], $data['email'], $data['password']];
+		$query = "INSERT INTO users (first_name, last_name, post_code, email, password, code, created_at, updated_at) values (?,?,?,?,?,?,NOW(),NOW())";
+		$values = [$data['first_name'], $data['last_name'], $data['post_code'], $data['email'], $data['password'],1];
 		return $this->db->query($query, $values);
 	}
 
@@ -187,6 +187,54 @@ class User extends CI_Model
         $values = [$data['chat'], $this->session->userdata('user_id')];
 		return $this->db->query($query,$values);
 		}
+	}
+
+	public function get_one_activity($data){
+		if (empty($data)) {
+			 return 0;
+		}else{
+		$query = 'SELECT * FROM activities where id=?';
+		$values = $data['activity_id'];
+		return $this->db->query($query,$values)->result_array();
+		}
+	}
+
+	public function check_email($data){
+		if (empty($data)) {
+			$email = 0;
+		}
+		else {
+			$email=($data['email']);
+		}
+		
+		$query = "SELECT * FROM users Where email =? ";
+		$values = [$email];
+		return $this->db->query($query, $values)->row_array();
+	}
+
+	public function update_code($code){
+		$query = "UPDATE users SET code =? , updated_at = NOW() WHERE email=?  ";
+		$values=[$code , $this->session->userdata('r_email')];
+		return $this->db->query($query,$values);
+	}
+	public function check_code($data){
+		if (empty($data)) {
+			$email = 0;
+			$code = 0;
+		}
+		else {
+			$email=($data['email']);
+			$code = ($data['code']);
+		}
+		$query = "SELECT * FROM users Where email =? and code=?";
+		$values = [$email,$code];
+		return $this->db->query($query, $values)->row_array();
+	}
+
+	public function new_password($data){
+		$query = "UPDATE users SET password=? , updated_at = NOW() WHERE email=?  ";
+		$values=[$data['password'] , $this->session->userdata('r_email')];
+		return $this->db->query($query,$values);
 	}
 	//this is contact method (send email)
 	/*

@@ -61,7 +61,7 @@
                     </div>
 
                 <?php }else{ ?>
-                <li class="dropdown <?php if(isset($errors)){ echo"open";} ?>"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Sign In<span class="caret"></span></a>
+                <li class="dropdown <?php if(isset($posts['errors'])){ echo"open";} ?>"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Sign In<span class="caret"></span></a>
 
                     <div class="dropdown-menu" id="formLogin">
                         <div class="row">
@@ -76,8 +76,8 @@
                                         <input class="form-control" name="password" id="password" type="password">
                                         <br class="">
                                     </div>
-                                      <?php if(isset($errors)){ 
-                                          echo"<p style='color:red;'>".$errors."</p>";
+                                      <?php if(isset($posts['errors'])){ 
+                                          echo"<p style='color:red;'>".$posts['errors']."</p>";
                                       } ?>
                                     <button type="submit" id="btnLogin" class="btn btn-success btn-sm">Login</button>
                                 </form>

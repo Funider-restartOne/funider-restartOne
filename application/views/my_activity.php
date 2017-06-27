@@ -217,7 +217,7 @@
 
         </div>
         
-        <div class="container-fluid right-activity col-md-9">
+        <div class="container-fluid right-activity col-md-9 col-sm-12">
             <div class="row">
                 <div class="col-md-12">
                     <div class="jumbotron">
@@ -233,7 +233,7 @@
 
                               if ($posts['result'][$i]['Participants'] !== "not going") {
                                 ?>
-                        <div class="col-md-3 activity-box">
+                        <div class="col-md-3 col-sm-3 activity-box">
                             <p><?= $posts['result'][$i]['type_of_activity'] ?></p> 
                             <p><?= $posts['result'][$i]['activity_date'] ?></p> 
                             <p><?= $posts['result'][$i]['start_time']." - ".$posts['result'][$i]['end_time'] ?></p> 
@@ -262,7 +262,7 @@
                                   
                                   if ($posts['post'][$i]['Participants'] !== "not going") {
                                     ?>
-                            <div class="col-md-3 activity-box">
+                            <div class="col-md-3 col-sm-3 activity-box">
                                 <p><?= $posts['post'][$i]['type_of_activity'] ?></p> 
                                 <p><?= $posts['post'][$i]['activity_date'] ?></p> 
                                 <p><?= $posts['post'][$i]['start_time']." - ".$posts['post'][$i]['end_time'] ?></p> <?php //echo $posts['post'][$i]['id_users_activity'] ?>

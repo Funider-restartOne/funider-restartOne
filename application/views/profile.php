@@ -223,7 +223,7 @@
 
         </div>
         
-        <div class="container-fluid right-activity col-md-9">
+        <div class="container-fluid right-activity col-md-9 col-sm-12">
             <div class="row">
                 <div class="col-md-12">
                     <div class="jumbotron">

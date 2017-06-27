@@ -221,7 +221,7 @@
                         <h2>Stories</h2>
                         <p>Our platform flourishes with your experiences, here you can share all the stories about the friends you encountered and the activities you experienced.</p>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-md-12">
                     <?php if ($this->session->userdata('user_id')) {?>
                         <form role="form" action="/index.php/Activity/insert_post" method="post">
                             <div class="form-group">

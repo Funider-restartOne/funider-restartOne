@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Chat</title>
-  <!-- Latest compiled and minified CSS -->
+	<title><?php for ($i=0; $i <count($data['result']) ; $i++) { echo $data['result'][$i]['title']; }?></title>
+	<!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
 <!-- Optional theme -->
@@ -10,42 +10,9 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
  
 <link rel="stylesheet" href="/assests/css/style.css" type="text/css">
-<style type="text/css">
-    .here{
-      height: 598px;
-      overflow: scroll;
-      margin-top: 50px;
-      margin-left: 20px;
-      margin-right: 30px;
-    }
-    .form-massage{
-      margin-left: 20px;
-    }
-    .message{
-      width: 90%;
-    }
-    .hidden{
-      display: none;
-    }
-    .normal-message , .user-message{
-      
-      border-radius: 20px;
-      width: 600px;
-      padding-left: 50px;
-      margin-top: 10px;
-      margin-bottom: 10px;
-      margin-left: 20px; 
-      clear: both;
-    }
-    .normal-message{
-      background: #EFF0F1;
-      
-    }
-    .user-message{
-      background: #C7F7CB;
-      float: right
-    }
-  </style>
+	<?= $data['map']['map']['js']; ?>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbkD511n17yo1FAPojJ-8lK2-S3YYXIIs&callback=initMap"
+  type="text/javascript"></script>
 </head>
 <body>
 <header>
@@ -65,7 +32,7 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/index.php/Activity"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
-                <li><a href="/index.php/Activity/activity_page_load">Activities</a></li>
+                <li><a href="">Activities</a></li>
                 <li><a href="/index.php/Activity/stories">Stories</a></li>
                 <li><a href="/index.php/Activity/load_chat" class="">Chat</a></li>
                 <li><a href="/index.php/Activity/about_us">About Us</a></li>
@@ -96,7 +63,7 @@
                     </div>
 
                 <?php }else{ ?>
-                <li class="dropdown <?php if(isset($chat['errors'])){ echo"open";} ?>"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Sign In<span class="caret"></span></a>
+                <li class="dropdown <?php if(isset($posts['errors'])){ echo"open";} ?>"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Sign In<span class="caret"></span></a>
 
                     <div class="dropdown-menu" id="formLogin">
                         <div class="row">
@@ -111,10 +78,10 @@
                                         <input class="form-control" name="password" id="password" type="password">
                                         <br class="">
                                     </div>
-                                      <?php if(isset($chat['errors'])){ 
-                                          echo"<p style='color:red;'>".$chat['errors']."</p>";
+                                      <?php if(isset($posts['errors'])){ 
+                                          echo"<p style='color:red;'>".$posts['errors']."</p>";
                                       } ?>
-                                    <button type="submit" name="loginSubmit" value="Login_chat" id="btnLogin" class="btn btn-success btn-sm">Login</button>
+                                    <button type="submit" name="loginSubmit" value="Login" id="btnLogin" class="btn btn-success btn-sm">Login</button>
                                 </form>
                             </div>
                         </div>
@@ -246,94 +213,47 @@
                   </ul>
               </div>
             </div>
-
         </div>
-
-
-
-
-
-
-
-
-
-
-
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/
-libs/jquery/1.3.0/jquery.min.js"></script>
-<div class="col-md-9">
-  <div class="row">
-    <div class="here">
-    <script type="text/javascript">
-    $(".here").animate({ scrollTop: 1000000000});
-    </script>
-      <?php for ($i=0; $i < count($chat['result']); $i++) { 
-        if ($this->session->userdata('user_id') === 
-          $chat['result'][$i]['users_id']) {
-              $class_name = "user-message";
-            }else{
-              $class_name = "normal-message";
-            }
-            echo '<div class="'.$class_name.' col-lg-12">
-                    <h3>'.$chat['result'][$i]['first_name'].' '.$chat['result'][$i]['last_name']  .'</h3>
-                    <p>'.$chat['result'][$i]['chat'].'</p>
-                    <p>'.$chat['result'][$i]['created_at'].'</p>
-                  </div>';
-             }
-              $last = end($chat['result'])['chat'];
-              $this->session->set_userdata(['last'=>$last]);
-              
-       ?>
-    </div>
-  
-<?php if ($this->session->userdata('user_id')){ ?>
-  
-
-<div class="form-massage">
-  <form action="/index.php/Activity/insert_chat" method="post">
-    <textarea class="message" name="chat"></textarea>
-    <input type="submit" name="send">
-  </form>
-</div>
-<?php } ?>
-</div>
-</div>
-<script type="text/javascript">
-
-var auto_refresh = setInterval(function ()
-{
-$('#load_tweets').load('/index.php/Activity/get_chat').fadeIn("slow");
-}, 1000);
-
-</script>
-<script type="text/javascript">
-
-var auto_load = setInterval(function ()
-{
-$('#load_tweet').load('/index.php/Activity/combering').fadeIn("slow");
-}, 1000);
-
-</script>
-
-
-
-
-
-
-
-
-
-
-
-</div>
-
-
-
-
-
-
-<!-- footer -->
- <footer id="footer" class="midnight-blue">
+        <div class="right-activity col-md-9" style='padding-left: 20px; margin-bottom: 20px;'>
+            <div class="row">
+<?php for ($i=0; $i <count($data['result']) ; $i++) { ?>
+                	<h2><?= $data['result'][$i]['title'] ?></h2>
+                    <p>type of activity : <?= $data['result'][$i]['type_of_activity'] ?></p>
+                    <p>activity date : <?= $data['result'][$i]['activity_date'] ?></p> 
+                    <p>start and end time : <?= $data['result'][$i]['start_time']." - ".$data['result'][$i]['end_time'] ?></p> 
+                    <p>address : <?= $data['result'][$i]['meeting_address'] ?></p>
+                    <p>post code : <?= $data['result'][$i]['Postcode'] ?></p>
+                    <p> Description : <?= $data['result'][$i]['Description'] ?></p>
+                    <p><?= $data['result'][$i]['getParticipants'] ?>:Participants</p>
+                    <input type="hidden" name="activity_id" value="<?= $data['result'][$i]['id'] ?>">
+                    <?php 
+                    for ($j=0; $j <count($data['result'][$i]['Participants']) ; $j++) { 
+                    if ($this->session->userdata('user_id')){
+                      
+                      if ($data['result'][$i]['Participants'] === "not going") {
+                        ?>
+                    <form  class="form-inline form-activity" action="/index.php/Activity/insert_Participants" method="post">
+                      <button style='margin-bottom: 20px;' type="submit" name="im_going" class="btn btn-default"><i class="fa fa-user-plus" aria-hidden="true"></i></button>
+                      <input  type="hidden" name="activity_id" value="<?= $data['result'][$i]['id'] ?>">
+                    </form>
+                    <?php 
+                      }else{
+                     ?><form action="/index.php/Activity/delete_Participants" method="post" >
+                      <button style='margin-bottom: 20px;' type="submit" name="im_not_going" class="btn btn-default"><i class="fa fa-user-times" aria-hidden="true"></i></button>
+                      <input type="hidden" name="activity_id" value="<?=$data['result'][$i]['id']?>">
+                    </form>
+                    
+                        <?php
+                      }
+                      }
+                      }
+                  ?>
+                  <?= $data['map']['map']['html']; ?>
+                <?php } ?>
+              </div>
+            </div>
+            </div>
+    <footer id="footer" class="midnight-blue">
         <div class="container">
             <div class="row">
                 <div class="col-sm-6">
@@ -350,19 +270,6 @@ $('#load_tweet').load('/index.php/Activity/combering').fadeIn("slow");
                 </div>
             </div>
         </div>
-    </footer><!--/#footer-->
-<!-- /footer -->
-<div class="hidden">
-  <div id="load_tweets" style="visibility: hidden;"></div>
-  <div id="load_tweet" style="visibility: hidden;"></div>
-</div>
-<script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<script src="/assests/javascript/carousel.js"></script>
-
-</body>
-</html>
+    </footer>
+                </body>
+                </html>
