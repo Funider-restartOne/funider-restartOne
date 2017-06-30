@@ -236,14 +236,16 @@
                           
                           <tr>
                           <td>Type Of Activity</td>
-                          <td><select name="taskOption">
-                          <option value="football" selected>Football</option>
-                          <option value="basketball">Basketball</option>
-                          <option value="running">Running</option>
-                          <option value="cycling">Cycling</option>
-                          <option value="hockey">Hockey</option>
-                          <option value="bowling">Bowling</option>
-                          </select></td>
+                            <td>
+                              <select name="taskOption">
+                                <option value="football" selected>Football</option>
+                                <option value="basketball">Basketball</option>
+                                <option value="running">Running</option>
+                                <option value="cycling">Cycling</option>
+                                <option value="hockey">Hockey</option>
+                                <option value="bowling">Bowling</option>
+                              </select>
+                            </td>
                           </tr>
 
 
@@ -307,13 +309,13 @@
                       if ($posts['result'][$i]['Participants'] === "not going") {
                         ?>
                     <form  class="form-inline form-activity" action="/index.php/Activity/insert_Participants" method="post">
-                      <button type="submit" name="im_going" class="btn btn-default"><i class="fa fa-user-plus" aria-hidden="true"></i></button>
+                      <button type="submit" style="color: green;" name="im_going" class="btn btn-default"><i class="fa fa-user-plus" aria-hidden="true"></i></button>
                       <input type="hidden" name="activity_id" value="<?= $posts['result'][$i]['id'] ?>">
                     </form>
                     <?php 
                       }else{
                      ?><form action="/index.php/Activity/delete_Participants" method="post" >
-                      <button type="submit" name="im_not_going" class="btn btn-default"><i class="fa fa-user-times" aria-hidden="true"></i></button>
+                      <button type="submit" name="im_not_going" class="btn btn-default"><i class="fa fa-user-times" style="color: #c70505;" aria-hidden="true"></i></button>
                       <input type="hidden" name="activity_id" value="<?=$posts['result'][$i]['id']?>">
                     </form>
                     

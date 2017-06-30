@@ -280,7 +280,7 @@
                   <?php if (empty($post[$i]['comments'])) {
                     echo "<h5 style='color:#337ab7'>there is no comments</h5>";
                   }else{ ?>
-                  <button class="btn btn-link" onclick="myStoryCommentFunction(<?=$post[$i]['messages_id'];?>)">Comments</button>
+                  <button class="btn btn-link" onclick="myStoryCommentFunction(<?=$post[$i]['messages_id'];?>)">Comments (<?= $post[$i]['getComments'] ?>)</button>
                     <script type="text/javascript">
                       function myStoryCommentFunction(id) {
                         var x = document.getElementById('mystory-comment-box '+id);

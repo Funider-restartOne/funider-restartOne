@@ -240,7 +240,7 @@ Please enter your email or phone number to search for your account.</p>
                       <div class="form-group">
                         <div class="input-group">
                           <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                          <input id="email" name="email" placeholder="email address" class="form-control"  type="email">
+                          <input id="email" name="email" placeholder="email address" class="form-control"  type="email" autocomplete>
                           <?php if (isset($error)){ echo $error; } ?>
                         </div>
                       </div>

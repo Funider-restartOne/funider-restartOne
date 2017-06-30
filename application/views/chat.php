@@ -291,7 +291,7 @@ libs/jquery/1.3.0/jquery.min.js"></script>
 
 <div class="form-massage">
   <form action="/index.php/Activity/insert_chat" method="post">
-    <textarea class="message" name="chat"></textarea>
+    <textarea id="textareaId" class="message" name="chat"></textarea>
     <input type="submit" name="send">
   </form>
 </div>
@@ -363,6 +363,14 @@ $('#load_tweet').load('/index.php/Activity/combering').fadeIn("slow");
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="/assests/javascript/carousel.js"></script>
-
+<script type="text/javascript">
+ $("#textareaId").keypress(function (e) {
+    if(e.which == 13 && !e.shiftKey) {        
+        $(this).closest("form").submit();
+        e.preventDefault();
+        return false;
+    }
+});
+</script>
 </body>
 </html>

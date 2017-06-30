@@ -272,11 +272,13 @@
                 
                 <!--/carousel-->
                 <div style="margin-top: 30px;">
-                  <?php for ($i=0; $i <5 ; $i++) {  ?>
+                  <?php for ($i=0; $i <=5 ; $i++) {  ?>
+                  <?php if (isset($posts['result'][5]['title'])): ?>
                     <div class="col-sm-6 col-lg-6">
                         <h2><?= htmlspecialchars($posts['result'][$i]['title']); ?></h2>
                         <p><?= htmlspecialchars($posts['result'][$i]['message']); ?></p>
                     </div>
+                  <?php endif ?>
                   <?php } ?>
                 </div>
                 <!--/span-->
@@ -301,9 +303,9 @@
                     <ul class="pull-right">
                         <li><a href="/index.php/Activity">Home</a></li>
                         <li><a href="/index.php/Activity/activity_page_load">Activities</a></li>
-                        <li><a href="/index.php/Activity/about_us">Stories</a></li>
+                        <li><a href="/index.php/Activity/stories">Stories</a></li>
                         <li><a href="/index.php/Activity/about_us">About Us</a></li>
-                        <li><a href="#">Contact Us</a></li>                        
+                        <li><a href="/index.php/Activity/contact_us">Contact Us</a></li>                        
                     </ul>
                 </div>
             </div>

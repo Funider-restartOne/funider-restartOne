@@ -292,7 +292,7 @@
                   <?php if (empty($posts['result'][$i]['comments'])) {
                     echo "<h5 style='color:#337ab7'>there is no comments</h5>";
                   }else{ ?>
-                    <button class="btn btn-link" onclick="myFirstFunction(<?=  htmlspecialchars($posts['result'][$i]['messages_id']); ?>)">Comments</button>
+                    <button class="btn btn-link" onclick="myFirstFunction(<?=  htmlspecialchars($posts['result'][$i]['messages_id']); ?>)">Comments (<?= $posts['result'][$i]['getComments'] ?>)</button>
 
                     <script type="text/javascript">
                       function myFirstFunction(id) {

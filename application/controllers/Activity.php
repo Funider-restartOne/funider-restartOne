@@ -148,7 +148,8 @@ class Activity extends CI_Controller
 				'title'=>$data[$i]['title'],
 				'message'=>$data[$i]['message'],
 				'messages_id'=>$data[$i]['id'],
-				'comments'=>$this->User->get_all_comment($data[$i]['id'])
+				'comments'=>$this->User->get_all_comment($data[$i]['id']),
+				'getComments'=>$this->User->get_count_comments($data[$i]['id'])
 				)
 			);
 		}
@@ -326,7 +327,8 @@ class Activity extends CI_Controller
 				'title'=>$data[$i]['title'],
 				'message'=>$data[$i]['message'],
 				'messages_id'=>$data[$i]['id'],
-				'comments'=>$this->User->get_all_comment($data[$i]['id'])
+				'comments'=>$this->User->get_all_comment($data[$i]['id']),
+				'getComments'=>$this->User->get_count_comments($data[$i]['id'])
 				)
 			);
 		}
@@ -613,15 +615,15 @@ class Activity extends CI_Controller
 					$code .= $characters[rand(0, strlen($characters)-1)];
 				}
 				$this->User->update_code($code);
-				$code_message = "Hello ".$this->session->userdata('r_email')." 
-				Someone has requested a code to change your password. You can do this through this code below.\r\n
+				$code_message = "Hello ".$this->session->userdata('r_email')." \r\n
+				Someone has requested a code to change your password. You can do this \r\n through this code below.\r\n
 				your code : ".$code."\r\n
 				If you didn't request this, please ignore this email.\r\n
-				Your password won't change until you enter this code above and create a new one.
+				Your password won't change until you enter this code above and create a \r\n new one.
 				";
 				$this->load->library('email');
 				
-				$this->email->from('anas@restart.network', 'Activity Team');
+				$this->email->from('No Reply@funider.com', 'Funider Team');
 				$this->email->to($this->session->userdata('r_email'));
 				//$this->email->cc('another@another-example.com');
 				//$this->email->bcc('them@their-example.com');
@@ -674,6 +676,50 @@ class Activity extends CI_Controller
 				$this->User->new_password($data);
 				redirect('/');
 			}
+		}
+
+		public function contact_us(){
+			$this->load->view('contact_us.php');
+		}
+
+		public function contact_pro(){
+			$this->load->library('form_validation');
+			$data= $this->input->post(NULL ,true);
+				$this->form_validation->set_rules('name','name','trim|required|min_length[3]',array('required'=>'you must enter your first name','min_length[3]'=>'enter an text more than 3 chars'));
+				$this->form_validation->set_rules('email','Email','trim|required|valid_email',array('required'=>'you must enter your  email','valid_email'=>'enter valid email'));
+
+				$this->form_validation->set_rules('subject','subject','trim|required|min_length[3]',array('required'=>'you must enter your last name','min_length[3]'=>'enter an text more than 3 chars'));
+
+				$this->form_validation->set_rules('message','message','trim|required|min_length[6]',array('required'=>'you must enter your post code','min_length[6]'=>'enter valid post code'));
+				if ($this->form_validation->run()==false)
+				{
+					$this->load->view('contact_us.php');
+				}
+				else
+				{
+					$name = $this->input->post('name' ,true);
+					$email=$this->input->post('email' ,true);
+					$subject = $this->input->post('subject' ,true);
+					$message = $this->input->post('message' ,true);
+					
+					$this->load->library('email');
+					$this->email->from($email, $name);
+					$this->email->to("mhd.anas.alrz@hotmail.com");
+					//$this->email->cc('another@another-example.com');
+					//$this->email->bcc('them@their-example.com');
+					//$this->email->set_header('Header1', 'Value1');
+					$this->email->subject("from funder submission 'contact us page' : ".$subject);
+					$this->email->message($message);
+
+					$result = $this->email->send();
+					if ($result) {
+						$this->load->view('/code.php');
+					}else{
+						echo($this->email->print_debugger());
+					}
+				}
+				
+
 		}
 
 		//logoff

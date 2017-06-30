@@ -53,6 +53,8 @@ class User extends CI_Model
 		 return $this->db->query($query,$values)->result_array();
 	}
 
+	
+
 	public function update_comment($data){
 		$query = "UPDATE comments SET comment =? , updated_at = NOW(),users_messages_id =?  WHERE id_c=?  ";
 		$values=[$data['comment'], $this->session->userdata('user_id'), $data['messages']];
@@ -169,6 +171,13 @@ class User extends CI_Model
 		$query = 'SELECT * FROM Participants RIGHT JOIN activities ON Participants.activity_id=activities.id join users on users.id = Participants.user_id WHERE Participants.activity_id=?';
 		$values = [$id];
 		$result = $this->db->query($query,$values);
+		return $result->num_rows();
+	}
+
+	public function get_count_comments($id){
+		$query = 'SELECT * FROM comments RIGHT JOIN messages ON comments.messages_id=messages.id join users on users.id = comments.users_messages_id WHERE comments.messages_id=?';
+		 $values=[$id];
+		 $result = $this->db->query($query,$values);
 		return $result->num_rows();
 	}
 
