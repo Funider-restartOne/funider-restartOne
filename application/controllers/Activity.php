@@ -258,7 +258,7 @@ class Activity extends CI_Controller
 
 	public function profile(){
 		$this->load->model('User');
-		$data=$this->User->get_profile();
+		$data['result']=$this->User->get_profile();
 		$this->load->view('/profile.php',['data'=>$data]);
 	}
 
@@ -288,12 +288,25 @@ class Activity extends CI_Controller
 		$data=$this->input->post(NULL ,true);
 		$email=$this->User->get_user($data);
 		if (count($email)>0) {
-			$error = "Your email exist.";
-			$this->load->view('/error.php',['error'=>$error]);
-		}
-		else{
-		$data=$this->User->edit_email($data);
-		redirect("/Activity/profile");
+			$data = array('error' => "This email exist !! Put your correct email",
+						  'result'=> $this->User->get_profile() 
+			);
+			$this->load->view('/profile.php',['data'=>$data]);
+		}else{
+			$this->load->library('form_validation');
+			$this->form_validation->set_rules('email','Email','trim|required|valid_email',array('required'=>'you must enter your  email','valid_email'=>'enter valid email'));
+
+			if ($this->form_validation->run()==false) {
+				$data = array('error' => "This email is incorrect !! Put your correct email",
+						  'result'=> $this->User->get_profile() 
+			);
+			$this->load->view('/profile.php',['data'=>$data]);
+			}
+
+			else{
+			$data=$this->User->edit_email($data);
+			redirect("/Activity/profile");
+			}
 		}
 	}
 
@@ -434,6 +447,9 @@ class Activity extends CI_Controller
 			$posts=array();
 			$input=$this->input->post(NULL ,true);
 			$data=$this->User->activity_site($input);
+			if ($data === 0) {
+				redirect('/');
+			}else{
 			for ($i=0; $i <count($data) ; $i++) 
 			{
 				array_push($posts
@@ -449,7 +465,7 @@ class Activity extends CI_Controller
 			);
 			}
 			return $posts;
-			
+			}
 		}
 
 		public function load_chat(){
@@ -475,9 +491,9 @@ class Activity extends CI_Controller
               $class_name = "normal-message";
             }
             echo '<div class="'.$class_name.' col-lg-12">
-                    <h3>'.$chat['result'][$i]['first_name'].' '.$chat['result'][$i]['first_name']  .'</h3>
-                    <p>'.$chat['result'][$i]['chat'].'</p>
-                    <p>'.$chat['result'][$i]['created_at'].'</p>
+                    <h3>'. htmlspecialchars($chat['result'][$i]['first_name'].' '.$chat['result'][$i]['last_name']) .'</h3>
+                    <p>'. htmlspecialchars($chat['result'][$i]['chat']).'</p>
+                    <p>'. htmlspecialchars($chat['result'][$i]['created_at']).'</p>
                   </div>';
              }
               $last = end($chat['result'])['chat'];
@@ -609,7 +625,7 @@ class Activity extends CI_Controller
 				$this->email->to($this->session->userdata('r_email'));
 				//$this->email->cc('another@another-example.com');
 				//$this->email->bcc('them@their-example.com');
-				$this->email->set_header('Header1', 'Value1');
+				//$this->email->set_header('Header1', 'Value1');
 				$this->email->subject('your code is');
 				$this->email->message($code_message);
 

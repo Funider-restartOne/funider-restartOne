@@ -228,11 +228,14 @@
                     <div class="activities-display-box">
                       <h2>Scheduled Activity</h2>
                           <?php for ($i=0; $i <count($posts['result']) ; $i++) { ?>
-                          <div class="col-md-3 activity-box">
-                              <p><?= $posts['result'][$i]['type_of_activity'] ?></p> 
-                              <p><?= $posts['result'][$i]['activity_date'] ?></p> 
-                              <p><?= $posts['result'][$i]['start_time']." - ".$posts['result'][$i]['end_time'] ?></p> 
-                              <p>23:Participants</p>
+                          <div class="col-md-3 col-sm-3 activity-box">
+                              <form action="/index.php/Activity/map" method="post">
+                                <button><p><?= $posts['result'][$i]['type_of_activity'] ?></p></button> 
+                                <p><?= $posts['result'][$i]['activity_date'] ?></p> 
+                                <p><?= $posts['result'][$i]['start_time']." - ".$posts['result'][$i]['end_time'] ?></p> 
+                                <p><?= $posts['result'][$i]['getParticipants'] ?>:Participants</p>
+                                <input type="hidden" name="activity_id" value="<?= $posts['result'][$i]['id'] ?>">
+                            </form>
                               <?php 
                               for ($j=0; $j <count($posts['result'][$i]['Participants']) ; $j++) { 
                               if ($this->session->userdata('user_id')){

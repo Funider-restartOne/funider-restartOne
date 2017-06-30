@@ -271,12 +271,14 @@
 
                 
                 <!--/carousel-->
-                <?php for ($i=0; $i <5 ; $i++) {  ?>
-                <div class="col-sm-6 col-lg-6">
-                    <h2><?= $posts['result'][$i]['title']; ?></h2>
-                    <p><?= $posts['result'][$i]['message']; ?></p>
+                <div style="margin-top: 30px;">
+                  <?php for ($i=0; $i <5 ; $i++) {  ?>
+                    <div class="col-sm-6 col-lg-6">
+                        <h2><?= htmlspecialchars($posts['result'][$i]['title']); ?></h2>
+                        <p><?= htmlspecialchars($posts['result'][$i]['message']); ?></p>
+                    </div>
+                  <?php } ?>
                 </div>
-                <?php } ?>
                 <!--/span-->
                 
             </div>
@@ -289,7 +291,7 @@
 <!-- /side -Bar -->
 
 <!-- footer -->
- <footer id="footer" class="midnight-blue">
+ <footer id="footer" class="midnight-blue" style="margin-top: 30px;">
         <div class="container">
             <div class="row">
                 <div class="col-sm-6">

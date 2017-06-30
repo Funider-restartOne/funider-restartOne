@@ -234,10 +234,13 @@
                               if ($posts['result'][$i]['Participants'] !== "not going") {
                                 ?>
                         <div class="col-md-3 col-sm-3 activity-box">
-                            <p><?= $posts['result'][$i]['type_of_activity'] ?></p> 
-                            <p><?= $posts['result'][$i]['activity_date'] ?></p> 
-                            <p><?= $posts['result'][$i]['start_time']." - ".$posts['result'][$i]['end_time'] ?></p> 
-                            <p><?= $posts['result'][$i]['getParticipants'] ?>:Participants</p>
+                            <form action="/index.php/Activity/map" method="post">
+                                <button><p><?= $posts['result'][$i]['type_of_activity'] ?></p></button> 
+                                <p><?= $posts['result'][$i]['activity_date'] ?></p> 
+                                <p><?= $posts['result'][$i]['start_time']." - ".$posts['result'][$i]['end_time'] ?></p> 
+                                <p><?= $posts['result'][$i]['getParticipants'] ?>:Participants</p>
+                                <input type="hidden" name="activity_id" value="<?= $posts['result'][$i]['id'] ?>">
+                            </form>
                             
                             <form action="/index.php/Activity/delete_Participants" method="post" >
                               <button type="submit" name="im_not_going" value="my_activity" class="btn btn-default"><i class="fa fa-user-times" aria-hidden="true"></i></button>
@@ -263,10 +266,13 @@
                                   if ($posts['post'][$i]['Participants'] !== "not going") {
                                     ?>
                             <div class="col-md-3 col-sm-3 activity-box">
-                                <p><?= $posts['post'][$i]['type_of_activity'] ?></p> 
+                                <form action="/index.php/Activity/map" method="post">
+                                <button><p><?= $posts['post'][$i]['type_of_activity'] ?></p></button> 
                                 <p><?= $posts['post'][$i]['activity_date'] ?></p> 
-                                <p><?= $posts['post'][$i]['start_time']." - ".$posts['post'][$i]['end_time'] ?></p> <?php //echo $posts['post'][$i]['id_users_activity'] ?>
+                                <p><?= $posts['post'][$i]['start_time']." - ".$posts['post'][$i]['end_time'] ?></p> 
                                 <p><?= $posts['post'][$i]['getParticipants'] ?>:Participants</p>
+                                <input type="hidden" name="activity_id" value="<?= $posts['post'][$i]['id'] ?>">
+                            </form>
                                 <form action="/index.php/Activity/delete_Participants" method="post" >
                                   <button type="submit" name="im_not_going" value="my_activity" class="btn btn-default"><i class="fa fa-user-times" aria-hidden="true"></i></button>
                                   <input type="hidden" name="activity_id" value="<?=$posts['post'][$i]['id']?>">

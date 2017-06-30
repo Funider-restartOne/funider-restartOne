@@ -137,9 +137,13 @@ class User extends CI_Model
 	}
 
 	public function activity_site($input){
+		if (empty($input)) {
+			return 0;
+		}else{
 		$query = 'SELECT * FROM activities where type_of_activity=? ORDER BY id DESC';
 		$values = [$input['activity_name']];
 		return $this->db->query($query,$values)->result_array();
+		}
 	}
 
 	public function insert_Participants($data){

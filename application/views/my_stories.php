@@ -243,8 +243,8 @@
 							 for ($i=0; $i <count($post) ; $i++) 
 							{
 								if($post[$i]['id'] === $this->session->userdata('user_id')){
-								echo "<div class='col-md-12 mystory-story-comment-box'>"."<br>"."<h2>".$post[$i]['title']."</h2>"."<br>";
-								echo "<p>".$post[$i]['message']."</p><br><p>"."Posted by"." : ".$post[$i]['first_name']." ".$post[$i]['last_name']."</p>"."<p>".$post[$i]['created_at']."</p>"."<br>";
+								echo "<div class='col-md-12 mystory-story-comment-box'>"."<br>"."<h2>". htmlspecialchars($post[$i]['title'])."</h2>"."<br>";
+								echo "<p>". htmlspecialchars($post[$i]['message'])."</p><br><p>"."Posted by"." : ". htmlspecialchars($post[$i]['first_name'])." ". htmlspecialchars($post[$i]['last_name'])."</p>"."<p>". htmlspecialchars($post[$i]['created_at'])."</p>"."<br>";
 								$comments=$post[$i]['comments'];
 								
 							?>
@@ -277,6 +277,9 @@
 								 
 									?>
                   <br>
+                  <?php if (empty($post[$i]['comments'])) {
+                    echo "<h5 style='color:#337ab7'>there is no comments</h5>";
+                  }else{ ?>
                   <button class="btn btn-link" onclick="myStoryCommentFunction(<?=$post[$i]['messages_id'];?>)">Comments</button>
                     <script type="text/javascript">
                       function myStoryCommentFunction(id) {
@@ -289,13 +292,14 @@
                         }
                     }
                     </script>
+                    <?php } ?>
 							<div id="mystory-comment-box <?=$post[$i]['messages_id'];?>" class="mystory-comment-box" style="margin-left: 50px; display: none;">
 							<?php 
 									for ($j=0; $j <count($comments) ; $j++) 
                 {
-									echo "<p>".$comments[$j]['comment']."</p>";
-									echo "<p>"."Commented by"." : ".$comments[$j]['first_name']." ".$comments[$j]['last_name']."</p>";
-									echo "<p>".$comments[$j]['created_at']."</p>";
+									echo "<p>". htmlspecialchars($comments[$j]['comment'])."</p>";
+									echo "<p>"."Commented by"." : ". htmlspecialchars($comments[$j]['first_name'])." ". htmlspecialchars($comments[$j]['last_name'])."</p>";
+									echo "<p>". htmlspecialchars($comments[$j]['created_at'])."</p>";
 									if( $comments[$j]['users_messages_id'] == $this->session->userdata('user_id')){
 									?>
 								<form action="/index.php/Activity/update_comment" method="post">

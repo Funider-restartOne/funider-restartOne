@@ -237,8 +237,7 @@
                           <tr>
                           <td>Type Of Activity</td>
                           <td><select name="taskOption">
-                          <option value="-1" selected>Select activity</option>
-                          <option value="football">Football</option>
+                          <option value="football" selected>Football</option>
                           <option value="basketball">Basketball</option>
                           <option value="running">Running</option>
                           <option value="cycling">Cycling</option>
@@ -254,11 +253,11 @@
                           </tr>
                           <tr>
                           <td>Start Date</td>
-                          <td><input type="date" name="data_activity" data-date-inline-picker="true" /></td>
+                          <td><input type="date" name="data_activity" value="<?php echo date("Y-m-d"); ?>" min="<?php echo date("Y-m-d"); ?>" data-date-inline-picker="true" /></td>
                           </tr>
                           <tr>
                           <td>Start Time</td>
-                          <td><input type="time" time-time-inline-picker="true" name="start_time" /></td>
+                          <td><input type="time" value="<?php echo date('G:i'); ?>" min="<?php echo date('G:i'); ?>" time-time-inline-picker="true" name="start_time" /></td>
                           </tr>
                           <tr>
                           <td>End Time</td>
@@ -295,10 +294,10 @@
                 <?php for ($i=0; $i <count($posts['result']) ; $i++) { ?>
                 <div class="col-md-3 activity-box">
                 <form action="/index.php/Activity/map" method="post">
-                    <button><p><?= $posts['result'][$i]['type_of_activity'] ?></p></button> 
-                    <p><?= $posts['result'][$i]['activity_date'] ?></p> 
-                    <p><?= $posts['result'][$i]['start_time']." - ".$posts['result'][$i]['end_time'] ?></p> 
-                    <p><?= $posts['result'][$i]['getParticipants'] ?>:Participants</p>
+                    <button><p><?=  htmlspecialchars($posts['result'][$i]['type_of_activity']) ?></p></button> 
+                    <p><?=  htmlspecialchars($posts['result'][$i]['activity_date']) ?></p> 
+                    <p><?=  htmlspecialchars($posts['result'][$i]['start_time']." - ".$posts['result'][$i]['end_time']) ?></p> 
+                    <p><?=  htmlspecialchars($posts['result'][$i]['getParticipants']) ?>:Participants</p>
                     <input type="hidden" name="activity_id" value="<?= $posts['result'][$i]['id'] ?>">
                 </form>
                     <?php 

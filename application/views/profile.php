@@ -234,35 +234,38 @@
                     <div class="col-md-9">
                     	<div class="myprofile-box">
                     	<?php 
-							for ($i=0; $i <count($data) ; $i++) { 
-								echo $data[$i]['first_name'];
+							for ($i=0; $i <count($data['result']) ; $i++) { 
+								echo  htmlspecialchars($data['result'][$i]['first_name']);
 							 ?>
 							<form action="/index.php/Activity/edit_firstname" method="post">
 								<input type="text" name="new_firstname" placeholder="new first name">
 								<input type="submit" name="submit" value="Edit">
 							</form>
 							 <?php
-								echo $data[$i]['last_name'];
+								echo  htmlspecialchars($data['result'][$i]['last_name']);
 							?>
 							<form action="/index.php/Activity/edit_lastname" method="post">
 								<input type="text" name="new_lastname" placeholder="new last name">
 								<input type="submit" name="submit" value="Edit">
 							</form>
 							<?php 
-								echo $data[$i]['post_code'];
+								echo  htmlspecialchars($data['result'][$i]['post_code']);
 							 ?>
 							<form action="/index.php/Activity/edit_postcode" method="post">
 								<input type="text" name="new_postcode" placeholder="new post code">
 								<input type="submit" name="submit" value="Edit">
 							</form>
 							 <?php 
-								echo $data[$i]['email'];
+								echo  htmlspecialchars($data['result'][$i]['email']);
 							?>
 							<form action="/index.php/Activity/edit_email" method="post">
 								<input type="text" name="email" placeholder="new email">
 								<input type="submit" name="submit" value="Edit">
 							</form>
 							<?php 
+              if (isset($data['error'])) {
+                echo "<p style='color:red'>".$data['error']."</p>";
+              }
 							} 
 						?>
 						<br>

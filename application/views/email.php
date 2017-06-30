@@ -231,7 +231,8 @@
                 <div class="text-center">
                   <h3><i class="fa fa-lock fa-4x"></i></h3>
                   <h2 class="text-center">Forgot Password?</h2>
-                  <p>You can reset your password here.</p>
+                  <p> 
+Please enter your email or phone number to search for your account.</p>
                   <div class="panel-body">
     
                     <form id="register-form" action="/index.php/Activity/check_email" role="form" autocomplete="off" class="form" method="post">
@@ -244,7 +245,7 @@
                         </div>
                       </div>
                       <div class="form-group">
-                        <input name="submit" class="btn btn-lg btn-primary btn-block" value="Reset Password" type="submit">
+                        <input name="submit" class="btn btn-lg btn-primary btn-block" value="Search" type="submit">
                       </div>
                       
                       <input type="hidden" class="hide" name="token" id="token" value=""> 

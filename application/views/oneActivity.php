@@ -214,17 +214,17 @@
               </div>
             </div>
         </div>
-        <div class="right-activity col-md-9" style='padding-left: 20px; margin-bottom: 20px;'>
+        <div class="right-activity col-md-9 col-sm-12" style='padding-left: 20px; margin-bottom: 20px;'>
             <div class="row">
 <?php for ($i=0; $i <count($data['result']) ; $i++) { ?>
-                	<h2><?= $data['result'][$i]['title'] ?></h2>
-                    <p>type of activity : <?= $data['result'][$i]['type_of_activity'] ?></p>
-                    <p>activity date : <?= $data['result'][$i]['activity_date'] ?></p> 
-                    <p>start and end time : <?= $data['result'][$i]['start_time']." - ".$data['result'][$i]['end_time'] ?></p> 
-                    <p>address : <?= $data['result'][$i]['meeting_address'] ?></p>
-                    <p>post code : <?= $data['result'][$i]['Postcode'] ?></p>
-                    <p> Description : <?= $data['result'][$i]['Description'] ?></p>
-                    <p><?= $data['result'][$i]['getParticipants'] ?>:Participants</p>
+                	<h2><?=  htmlspecialchars($data['result'][$i]['title']) ?></h2>
+                    <p><b>type of activity :</b> <?=  htmlspecialchars($data['result'][$i]['type_of_activity']) ?></p>
+                    <p><b>activity date :</b> <?=  htmlspecialchars($data['result'][$i]['activity_date']) ?></p> 
+                    <p><b>start and end time :</b> <?=  htmlspecialchars($data['result'][$i]['start_time']." - ".$data['result'][$i]['end_time']) ?></p> 
+                    <p><b>address :</b> <?=  htmlspecialchars($data['result'][$i]['meeting_address']) ?></p>
+                    <p><b>post code :</b> <?=  htmlspecialchars($data['result'][$i]['Postcode']) ?></p>
+                    <p> <b>Description :</b> <?=  htmlspecialchars($data['result'][$i]['Description']) ?></p>
+                    <p><?= htmlspecialchars($data['result'][$i]['getParticipants']) ?>:Participants</p>
                     <input type="hidden" name="activity_id" value="<?= $data['result'][$i]['id'] ?>">
                     <?php 
                     for ($j=0; $j <count($data['result'][$i]['Participants']) ; $j++) { 
