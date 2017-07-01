@@ -3,13 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>Sign-Up/Login Form</title>
+  <?php $this->load->view('general.php'); ?>
   <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-
-  
   <link rel="stylesheet" href="/assests/css/register.css">
-
-  
+  <style type="text/css">p {margin: 15px 0 10px;color: black;}</style>
 </head>
 
 <body>
@@ -25,7 +23,7 @@
           <h1>Sign Up for Free</h1>
           
           <form action="/index.php/Activity/register" method="post">
-          
+          <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
           <div class="top-row">
             <div class="field-wrap form-group">
               <label>
@@ -87,6 +85,7 @@
           <h1>Welcome Back!</h1>
           
           <form action="/index.php/Activity/login" method="post">
+          <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
            <div class="field-wrap form-group">
             <label>
               Email Address<span class="req">*</span>

@@ -91,6 +91,7 @@ class Activity extends CI_Controller
 		$this->load->view('registration');
 	}
 	public function register(){
+		$this->load->helper('form');
 		$this->load->library('form_validation');
 		$this->load->model('User');
 		$data= $this->input->post(NULL ,true);
@@ -713,7 +714,8 @@ class Activity extends CI_Controller
 
 					$result = $this->email->send();
 					if ($result) {
-						$this->load->view('/code.php');
+						$done = "thank you";
+						$this->load->view('/contact_us.php',['done'=>$done]);
 					}else{
 						echo($this->email->print_debugger());
 					}

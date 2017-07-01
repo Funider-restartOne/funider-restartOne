@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>new password</title>
+	<?php $this->load->view('general.php'); ?>
 </head>
 <body>
 <form method="post" action="/index.php/Activity/set_new_password">
