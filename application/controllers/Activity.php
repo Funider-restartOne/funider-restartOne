@@ -52,6 +52,12 @@ class Activity extends CI_Controller
 					);
 				$this->load->view('/chat.php',['chat'=>$chat]);
 			}
+			elseif ($submit === "login_about_us") {
+				$posts = array(
+					'errors' => 'Email or password is incorrect'
+					);
+				$this->load->view('/about_us.php',['posts'=>$posts]);
+			}
 			else{
 			 	$posts = array('errors' => 'Email or password is incorrect',
 			 					'result' => $this->stories_load()
@@ -76,6 +82,11 @@ class Activity extends CI_Controller
 				$this->session->set_userdata(['user_id'=>$user['id']]);
 				$chat['result'] = $this->get_all_chat();
 				$this->load->view('/chat.php',['chat'=>$chat]);
+			}
+			elseif ($submit === "login_about_us") {
+				$this->session->set_userdata(['first_name'=>$user['first_name']]);
+				$this->session->set_userdata(['user_id'=>$user['id']]);
+				$this->load->view('/about_us.php');
 			}
 			else{
 				$this->session->set_userdata(['first_name'=>$user['first_name']]);
@@ -600,15 +611,28 @@ class Activity extends CI_Controller
 
 
 	public function forget_password(){
+		if ($this->session->userdata('first_name')) {
+			redirect('/');
+		}else{
 		$this->load->view('/email.php');
+		}
 	}
 
 
 	public function check_email(){
 		$this->load->model('User');
 		$data = $this->input->post(NULL ,true);
+		if ($this->session->userdata('first_name')) {
+			redirect('/');
+		}
+		elseif (empty($data)) {
+				$error = 'please enter your email';
+				$this->load->view('/email.php',['error'=>$error]);
+			}
+		else{
 		$this->session->set_userdata(['r_email'=>$data['email']]);
 			$check = $this->User->check_email($data);
+			
 			if ($check) {
 				$characters = '0123456789abccdefghijklmnopkrstuvwxyzABCCDEFGHIJKLMNOPKRSTUVWXYZ';
 				$code = '';
@@ -642,6 +666,7 @@ class Activity extends CI_Controller
 				$error = 'this email dose not exist';
 				$this->load->view('/email.php',['error'=>$error]);
 			}
+		}
 		
 	}
 
@@ -650,7 +675,14 @@ class Activity extends CI_Controller
 			$this->load->model('User');
 			$data = $this->input->post(NULL ,true);
 				$check = $this->User->check_code($data);
-				if ($check){
+				if ($this->session->userdata('first_name')) {
+					redirect('/');
+				}
+				elseif (empty($data)) {
+					$error ='please enter the code';
+					$this->load->view('/code.php',['error'=>$error]);
+				}
+				elseif ($check){
 					$this->load->view('/new_password.php');
 				}else{
 					$error ='this code is incorrect';
@@ -663,10 +695,13 @@ class Activity extends CI_Controller
 			$this->load->model('User');
 			$data= $this->input->post(NULL ,true);
 
-			$info = $data['email'];
+			$info = $this->session->userdata('r_email');
 			$password =$this->input->post('password' ,true);
 			$conf_password =$this->input->post('conf_password' ,true);
-			if (strlen($password)<8) {
+			if ($this->session->userdata('first_name')) {
+				redirect('/');
+			}
+			elseif (strlen($password)<8) {
 				$info = $error1 = "enter an password more than 8 chars";
 				$this->load->view('/new_password.php',['error1'=>$error1]);
 			}elseif ($password !== $conf_password) {
@@ -738,6 +773,16 @@ class Activity extends CI_Controller
 		public function logoff_activity(){
 			$this->session->sess_destroy();
 			redirect("/Activity/activity_page_load");
+		}
+
+		public function logoff_chat(){
+			$this->session->sess_destroy();
+			redirect("/Activity/load_chat");
+		}
+
+		public function logoff_about_us(){
+			$this->session->sess_destroy();
+			redirect("/Activity/about_us");
 		}
 }
 

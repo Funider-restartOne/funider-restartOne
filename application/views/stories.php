@@ -46,7 +46,7 @@
                                 <hr>
                               </div>
                               <div class="form-group">
-                                <p><a href="/index.php/Activity/logoff">Logout</a></p>
+                                <p><a href="/index.php/Activity/logoff_stories">Logout</a></p>
                               </div>
                             </div>
                         </div>

@@ -72,7 +72,7 @@
                                       <?php if(isset($posts['errors'])){ 
                                           echo"<p style='color:red;'>".$posts['errors']."</p>";
                                       } ?>
-                                    <button type="submit" name="loginSubmit" value="loginSubmit" id="btnLogin" class="btn btn-success btn-sm">Login</button>
+                                    <button type="submit" name="loginSubmit" id="btnLogin" class="btn btn-success btn-sm">Login</button>
                                 </form>
                             </div>
                         </div>
@@ -120,9 +120,9 @@ Please enter your email or phone number to search for your account.</p>
                       <div class="form-group">
                         <div class="input-group">
                           <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                          <input id="email" name="email" placeholder="email address" class="form-control"  type="email" autocomplete>
-                          <?php if (isset($error)){ echo $error; } ?>
+                          <input id="email" name="email" placeholder="email address" class="form-control"  type="email" autocomplete>  
                         </div>
+                        <?php if (isset($error)){ echo "<p style='color:red'>".$error."</p>"; } ?>
                       </div>
                       <div class="form-group">
                         <input name="submit" class="btn btn-lg btn-primary btn-block" value="Search" type="submit">

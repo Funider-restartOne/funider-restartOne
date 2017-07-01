@@ -46,7 +46,7 @@
                                 <hr>
                               </div>
                               <div class="form-group">
-                                <p><a href="/index.php/Activity/logoff">Logout</a></p>
+                                <p><a href="/index.php/Activity/logoff_about_us">Logout</a></p>
                               </div>
                             </div>
                         </div>
@@ -59,6 +59,7 @@
                         <div class="row">
                             <div class="container-fluid">
                                 <form class="" action="/index.php/Activity/login" method="post">
+                                <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
                                     <div class="form-group">
                                         <label class="">Email</label>
                                         <input class="form-control" name="email" id="username" type="text">
@@ -71,7 +72,7 @@
                                       <?php if(isset($posts['errors'])){ 
                                           echo"<p style='color:red;'>".$posts['errors']."</p>";
                                       } ?>
-                                    <button type="submit" name="loginSubmit" value="loginSubmit" id="btnLogin" class="btn btn-success btn-sm">Login</button>
+                                    <button type="submit" name="loginSubmit" value="login_about_us" id="btnLogin" class="btn btn-success btn-sm">Login</button>
                                 </form>
                             </div>
                         </div>
@@ -79,7 +80,7 @@
                 </li>
                 <?php } 
                 if (($this->session->userdata('first_name'))== true){ ?>
-                <li><a href="/index.php/Activity/logoff_stories" class="">Logout</a></li>
+                <li><a href="/index.php/Activity/logoff_about_us" class="">Logout</a></li>
                 <?php }else{ ?>
                 <li><a href="/index.php/Activity/register_page" class="">Register</a></li>
                 <?php } ?>

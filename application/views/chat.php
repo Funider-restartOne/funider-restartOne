@@ -46,7 +46,7 @@
                                 <hr>
                               </div>
                               <div class="form-group">
-                                <p><a href="/index.php/Activity/logoff">Logout</a></p>
+                                <p><a href="/index.php/Activity/logoff_chat">Logout</a></p>
                               </div>
                             </div>
                         </div>
@@ -81,7 +81,7 @@
                 </li>
                 <?php } 
                 if (($this->session->userdata('first_name'))== true){ ?>
-                <li><a href="/index.php/Activity/logoff_activity" class="">Logout</a></li>
+                <li><a href="/index.php/Activity/logoff_chat" class="">Logout</a></li>
                 <?php }else{ ?>
                 <li><a href="/index.php/Activity/register_page" class="">Register</a></li>
                 <?php } ?>

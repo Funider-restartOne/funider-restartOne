@@ -1,5 +1,5 @@
 <!-- footer -->
- <footer id="footer" class="midnight-blue" style="margin-top: 30px;">
+ <footer id="footer" class="midnight-blue " style="margin-top: 30px;">
         <div class="container">
             <div class="row">
                 <div class="col-sm-6">
