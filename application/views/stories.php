@@ -2,15 +2,7 @@
 <html>
 <head>
   <title>navbar</title>
-  <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
- 
-<link rel="stylesheet" href="/assests/css/style.css" type="text/css">
-
+  <?php $this->load->view('general.php'); ?>
 </head>
 <body>
 <header>
@@ -54,7 +46,7 @@
                                 <hr>
                               </div>
                               <div class="form-group">
-                                <p><a href="/index.php/Activity/logoff">Logout</a></p>
+                                <p><a href="/index.php/Activity/logoff_stories">Logout</a></p>
                               </div>
                             </div>
                         </div>
@@ -67,6 +59,7 @@
                         <div class="row">
                             <div class="container-fluid">
                                 <form class="" action="/index.php/Activity/login" method="post">
+                                <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
                                     <div class="form-group">
                                         <label class="">Email</label>
                                         <input class="form-control" name="email" id="username" type="text">
@@ -103,117 +96,7 @@
     </div>
 </nav>
 </header>
-
-<div class="clear"></div>
-
-<!-- /Upper Nav -Bar -->
-<div class="container-fluid"></div>
-    <div class="row">
-        <div class=" left-activity col-md-3">
-          <div class="nav-side-menu">
-              <div class="brand">Meet Up For Fun</div>
-              <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
-              <div class="menu-list">
-                  <ul id="menu-content" class="menu-content collapse out">
-                      <li>
-                          <a href="#">
-                              <i class="fa fa-bars fa-lg"></i> Activities
-                          </a>
-                      </li>
-                      <li data-toggle="collapse" data-target="#products" class="collapsed active">
-                          <a href="#"><i class="fa fa-futbol-o fa-lg"></i> Football <span class="arrow"></span></a>
-                      </li>
-                      <ul class="sub-menu collapse" id="products">
-                        <form action="/index.php/Activity/site_activity" method="post">
-                          <li class="active"><input style="background: #181C20;border: none;width: 80%;display: inline-block !important;" type="submit" name="football" value="Scheduled Activities">
-                          <input type="hidden" name="activity_name" value="football"></li>
-                        </form>
-                          <li><a href="/index.php/Activity/activity_page_load" class="click-table" onclick="myFunction()">Create  An Activity</a></li>
-                          <li><a href="/index.php/Activity/stories">Stories</a></li>
-                          <li><a href="/index.php/Activity/stories">Post a Story</a></li>
-                      </ul>
-                      <li data-toggle="collapse" data-target="#service" class="collapsed">
-                          <a href="#"><i class="fa fa-dribbble fa-lg"></i> Basketball <span class="arrow"></span></a>
-                      </li>
-                      <ul class="sub-menu collapse" id="service">
-                        <form action="/index.php/Activity/site_activity" method="post">
-                          <li class="active"><input style="background: #181C20;border: none;width: 80%;display: inline-block !important;" type="submit" name="football" value="Scheduled Activities">
-                          <input type="hidden" name="activity_name" value="basketball"></li>
-                        </form>
-                          <li><a href="/index.php/Activity/activity_page_load" onclick="myFunction()">Create An Activity</a></li>
-                          <li><a href="/index.php/Activity/stories">Stories</a></li>
-                          <li><a href="/index.php/Activity/stories">Post a Story</a></li>
-                      </ul>
-
-
-                      <li data-toggle="collapse" data-target="#new" class="collapsed">
-                          <a href="#"><i class="fa fa-bicycle fa-lg"></i> Cycling <span class="arrow"></span></a>
-                      </li>
-                      <ul class="sub-menu collapse" id="new">
-                        <form action="/index.php/Activity/site_activity" method="post">
-                          <li class="active"><input style="background: #181C20;border: none;width: 80%;display: inline-block !important;" type="submit" name="football" value="Scheduled Activities">
-                          <input type="hidden" name="activity_name" value="cycling"></li>
-                        </form>
-                          <li><a href="/index.php/Activity/activity_page_load" onclick="myFunction()">Create  An Activity</a></li>
-                          <li><a href="/index.php/Activity/stories">Stories</a></li>
-                          <li><a href="/index.php/Activity/stories">Post a Story</a></li>
-                      </ul>
-
-                      <li data-toggle="collapse" data-target="#running" class="collapsed">
-                          <a href="#"><i class="fa fa-child fa-lg"></i> Running <span class="arrow"></span></a>
-                      </li>
-                      <ul class="sub-menu collapse" id="running">
-                        <form action="/index.php/Activity/site_activity" method="post">
-                          <li class="active"><input style="background: #181C20;border: none;width: 80%;display: inline-block !important;" type="submit" name="football" value="Scheduled Activities">
-                          <input type="hidden" name="activity_name" value="running"></li>
-                        </form>
-                          <li><a href="/index.php/Activity/activity_page_load" onclick="myFunction()">Create An Activity</a></li>
-                          <li><a href="/index.php/Activity/stories">Stories</a></li>
-                          <li><a href="/index.php/Activity/stories">Post a Story</a></li>
-                      </ul>
-
-                      <li data-toggle="collapse" data-target="#hockey" class="collapsed">
-                          <a href="#"><i class="fa fa-legal fa-lg"></i> Hockey <span class="arrow"></span></a>
-                      </li>
-                      <ul class="sub-menu collapse" id="hockey">
-                        <form action="/index.php/Activity/site_activity" method="post">
-                          <li class="active"><input style="background: #181C20;border: none;width: 80%;display: inline-block !important;" type="submit" name="football" value="Scheduled Activities">
-                          <input type="hidden" name="activity_name" value="hockey"></li>
-                        </form>
-                          <li><a href="/index.php/Activity/activity_page_load" onclick="myFunction()">Create  An Activity</a></li>
-                          <li><a href="/index.php/Activity/stories">Stories</a></li>
-                          <li><a href="/index.php/Activity/stories">Post a Story</a></li>
-                      </ul>
-
-                      <li data-toggle="collapse" data-target="#bowling" class="collapsed">
-                          <a href="#"><i class="fa fa-renren fa-lg"></i> Bowling <span class="arrow"></span></a>
-                      </li>
-                      <ul class="sub-menu collapse" id="bowling">
-                        <form action="/index.php/Activity/site_activity" method="post">
-                          <li class="active"><input style="background: #181C20;border: none;width: 80%;display: inline-block !important;" type="submit" name="football" value="Scheduled Activities">
-                          <input type="hidden" name="activity_name" value="basketball"></li>
-                        </form>
-                          <li><a href="/index.php/Activity/activity_page_load" onclick="myFunction()">Create An Activity</a></li>
-                          <li><a href="/index.php/Activity/stories">Stories</a></li>
-                          <li><a href="/index.php/Activity/stories">Post a Story</a></li>
-                      </ul>
-
-                      <li>
-                          <a href="#">
-                              <i class="fa fa-info fa-lg"></i> Guide
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <i class="fa fa-database fa-lg"></i> Sport fields data
-                          </a>
-                      </li>
-                  </ul>
-              </div>
-            </div>
-
-        </div>
-        
+<?php $this->load->view('activity_bar.php'); ?>
         <div class="container-fluid right-activity col-md-9">
             <div class="row">
                 <div class="col-md-12">
@@ -224,19 +107,16 @@
                     <div class="col-md-12">
                     <?php if ($this->session->userdata('user_id')) {?>
                         <form role="form" action="/index.php/Activity/insert_post" method="post">
+                        <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
                             <div class="form-group">
                               <label for="exampleInputEmail1"></label>
-                              <textarea class="textarea text-area-story" name="title" placeholder="Title of your story" rows="1" cols="100%"></textarea>
+                              <textarea class="textarea text-area-story" name="title" placeholder="Title of your story" rows="1" cols="100%" required></textarea>
                             </div>
                             <div class="form-group">
                                <label for="exampleInputFile"></label>
-                               <textarea class="textarea text-area-story" name="message"  placeholder="Write your story..." rows="5" cols="100%"></textarea>
+                               <textarea class="textarea text-area-story" name="message"  placeholder="Write your story..." rows="5" cols="100%" required></textarea>
                             </div>
-                            
-                            <div class="element">
-                                <i class="fa fa-camera"></i><span class="name"></span>
-                                <input type="file" name="" id="" style="display: none;">
-                            </div>                            
+                                                        
                             <button type="submit" name="submit" value="Post" class="btn btn-default button-story-post">Post</button>
                         </form>
                         <?php
@@ -253,15 +133,15 @@
                 <?php for ($i=0; $i <count($posts['result']) ; $i++) {  ?>
                   <div class="col-md-12">
                     <hr>
-                    <h2><?= $posts['result'][$i]['title']; ?></h2>
-                    <p><?= $posts['result'][$i]['message']; ?></p>
-                    <p>Posted by <?= $posts['result'][$i]['first_name']." ".$posts['result'][$i]['last_name'];?> </p>
-                    <p><?= $posts['result'][$i]['created_at']; ?></p>
-                    <?php $comments=$posts['result'][$i]['comments'];
-                    if($posts['result'][$i]['id'] === $this->session->userdata('user_id')){?>
+                    <h2><?=  htmlspecialchars($posts['result'][$i]['title']); ?></h2>
+                    <p><?=  htmlspecialchars($posts['result'][$i]['message']); ?></p>
+                    <p>Posted by <?=  htmlspecialchars($posts['result'][$i]['first_name']." ".$posts['result'][$i]['last_name']);?> </p>
+                    <p><?=  htmlspecialchars($posts['result'][$i]['created_at']); ?></p>
+                    <?php $comments= $posts['result'][$i]['comments'];
+                    if( htmlspecialchars($posts['result'][$i]['id']) === $this->session->userdata('user_id')){?>
 
                     <!--Editing your story-->
-                    <button class="btn btn-link" onclick="myEditFunction(<?= $posts['result'][$i]['messages_id']; ?>)">Edit Stories</button>
+                    <button class="btn btn-link" onclick="myEditFunction(<?=  htmlspecialchars($posts['result'][$i]['messages_id']); ?>)">Edit Stories</button>
                     <script type="text/javascript">
                       function myEditFunction(id) {
                         var x = document.getElementById('stories-edit-box '+id);
@@ -276,12 +156,14 @@
 
                     <div id="stories-edit-box <?= $posts['result'][$i]['messages_id']; ?>" class="story-editing-box" style="display: none;">
                       <form action="/index.php/Activity/update_post" method="post">
-                        <textarea class="textarea text-area-story" name="title" rows="1" cols="60%"><?= $posts['result'][$i]['title']; ?></textarea>                      
-                        <textarea class="textarea text-area-story" name="message" rows="2" cols="60%"><?= $posts['result'][$i]['message']; ?></textarea><br>                      
+                      <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
+                        <textarea class="textarea text-area-story" name="title" rows="1" cols="60%"><?=  htmlspecialchars($posts['result'][$i]['title']); ?></textarea>                      
+                        <textarea class="textarea text-area-story" name="message" rows="2" cols="60%"><?=  htmlspecialchars($posts['result'][$i]['message']); ?></textarea><br>                      
                         <button type="submit" class="btn btn-default story-form-buttons" name="update_p" value="Edit">Edit</button>
                         <input style="display: inline-block;" type="hidden" name="messages" value="<?=$posts['result'][$i]['messages_id'];?>">
                       </form>
                       <form action="/index.php/Activity/delete_post" method="post">
+                      <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
                         <button type="submit" class="btn btn-default story-form-buttons" name="update_c" value="Delete">Delete</button>
                         <input type="hidden" name="message" value="<?=$posts['result'][$i]['messages_id'];?>">
                       </form>
@@ -290,9 +172,14 @@
                     <!--/Editing your story-->
 
                     <?php
-                    }?>
+                    }
 
-                    <button class="btn btn-link" onclick="myFirstFunction(<?= $posts['result'][$i]['messages_id']; ?>)">Comments</button>
+                    ?>
+                  <?php if (empty($posts['result'][$i]['comments'])) {
+                    echo "<h5 style='color:#337ab7'>there is no comments</h5>";
+                  }else{ ?>
+                    <button class="btn btn-link" onclick="myFirstFunction(<?=  htmlspecialchars($posts['result'][$i]['messages_id']); ?>)">Comments (<?= $posts['result'][$i]['getComments'] ?>)</button>
+
                     <script type="text/javascript">
                       function myFirstFunction(id) {
                         var x = document.getElementById('stories-comment-box '+id);
@@ -304,22 +191,25 @@
                         }
                     }
                     </script>
+                    <?php } ?>
                     <br>
                     <div class="container-fluid" id="stories-comment-box <?= $posts['result'][$i]['messages_id']; ?>" style="display: none;">
                         <div class="row">
                         <?php for ($j=0; $j <count($comments) ; $j++){ ?>
                             <div class="col-lg-10 comment-box"><br>
-                                <p><?= $comments[$j]['comment']; ?></p>
-                                <p>Commented by <?= $comments[$j]['first_name']." ".$comments[$j]['last_name']; ?></p>
-                                <p><?= $comments[$j]['created_at'] ?></p>
+                                <p><?=  htmlspecialchars($comments[$j]['comment']); ?></p>
+                                <p>Commented by <?=  htmlspecialchars($comments[$j]['first_name']." ".$comments[$j]['last_name']); ?></p>
+                                <p><?=  htmlspecialchars($comments[$j]['created_at']); ?></p>
                             <?php if( $comments[$j]['users_messages_id'] == $this->session->userdata('user_id')){
                               ?>
                             <form action="/index.php/Activity/update_comment" method="post">
-                              <textarea class="textarea text-area-story" name="comment" ><?= $comments[$j]['comment']; ?></textarea><br>
+                            <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
+                              <textarea class="textarea text-area-story" name="comment" ><?=  htmlspecialchars($comments[$j]['comment']); ?></textarea><br>
                               <button type="submit" class="btn btn-default story-form-buttons" name="update_c" value="Edit">Edit</button>
                               <input type="hidden" name="messages" value="<?=$comments[$j]['id_c'];?>">
                             </form>
                             <form action="/index.php/Activity/delete_comment" method="post">
+                            <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
                               <button type="submit" class="btn btn-default story-form-buttons" name="update_c" value="Delete">Delete</button>
                               <input type="hidden" name="message" value="<?=$comments[$j]['id_c'];?>">
                             </form>
@@ -330,10 +220,11 @@
                         </div>
                     </div>
                     <?php if ($this->session->userdata('user_id')) {?>
-                    <form role="form" action="/index.php/Activity/insert_comment" method="POST" class="form-inline">                         
+                    <form role="form" action="/index.php/Activity/insert_comment" method="POST" class="form-inline">            
+                    <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />             
                         <div class="form-group">
                             <label for="exampleInputFile"></label>
-                            <textarea class="textarea text-area-story" name="comment" placeholder="Write a comment..." rows="1" cols="110%"></textarea>
+                            <textarea class="textarea text-area-story" name="comment" placeholder="Write a comment..." rows="1" cols="110%" required></textarea>
                             <input type="hidden" name="message" value="<?=$posts['result'][$i]['messages_id'];?>">
                         </div>
                         <button type="submit" class="btn btn-default form-comment-button" >Comment</button>
@@ -353,48 +244,7 @@
         <!--/form-->
 
 </div>
-<!-- side -Bar -->
-
-
-
-<!-- /side -Bar -->
-
-<!-- footer -->
-</div>
- <footer id="footer" class="midnight-blue">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6">
-                    &copy; 2017 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">Funider</a>.
-                </div>
-                <div class="col-sm-6">
-                    <ul class="pull-right">
-                        <li><a href="/index.php/Activity">Home</a></li>
-                        <li><a href="/index.php/Activity/activity_page_load">Activities</a></li>
-                        <li><a href="/index.php/Activity/about_us">Stories</a></li>
-                        <li><a href="/index.php/Activity/about_us">About Us</a></li>
-                        <li><a href="#">Contact Us</a></li>                        
-                    </ul>
-                </div>
-            </div>
-        </div>
-  </footer><!--/#footer-->
-<!-- /footer -->
-
-
-<script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>
-<!-- Latest compiled and minified JavaScript -->
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="/assests/javascript/carousel.js"></script>
-<script src="/assests/javascript/create.js"></script>
-<script src="/assests/javascript/stories.js"></script>
-
+<?php $this->load->view('footer.php'); ?>
 </body>
 </html>
 

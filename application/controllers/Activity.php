@@ -52,6 +52,12 @@ class Activity extends CI_Controller
 					);
 				$this->load->view('/chat.php',['chat'=>$chat]);
 			}
+			elseif ($submit === "login_about_us") {
+				$posts = array(
+					'errors' => 'Email or password is incorrect'
+					);
+				$this->load->view('/about_us.php',['posts'=>$posts]);
+			}
 			else{
 			 	$posts = array('errors' => 'Email or password is incorrect',
 			 					'result' => $this->stories_load()
@@ -77,6 +83,11 @@ class Activity extends CI_Controller
 				$chat['result'] = $this->get_all_chat();
 				$this->load->view('/chat.php',['chat'=>$chat]);
 			}
+			elseif ($submit === "login_about_us") {
+				$this->session->set_userdata(['first_name'=>$user['first_name']]);
+				$this->session->set_userdata(['user_id'=>$user['id']]);
+				$this->load->view('/about_us.php');
+			}
 			else{
 				$this->session->set_userdata(['first_name'=>$user['first_name']]);
 				$this->session->set_userdata(['user_id'=>$user['id']]);
@@ -91,6 +102,7 @@ class Activity extends CI_Controller
 		$this->load->view('registration');
 	}
 	public function register(){
+		$this->load->helper('form');
 		$this->load->library('form_validation');
 		$this->load->model('User');
 		$data= $this->input->post(NULL ,true);
@@ -148,7 +160,8 @@ class Activity extends CI_Controller
 				'title'=>$data[$i]['title'],
 				'message'=>$data[$i]['message'],
 				'messages_id'=>$data[$i]['id'],
-				'comments'=>$this->User->get_all_comment($data[$i]['id'])
+				'comments'=>$this->User->get_all_comment($data[$i]['id']),
+				'getComments'=>$this->User->get_count_comments($data[$i]['id'])
 				)
 			);
 		}
@@ -258,7 +271,7 @@ class Activity extends CI_Controller
 
 	public function profile(){
 		$this->load->model('User');
-		$data=$this->User->get_profile();
+		$data['result']=$this->User->get_profile();
 		$this->load->view('/profile.php',['data'=>$data]);
 	}
 
@@ -288,12 +301,25 @@ class Activity extends CI_Controller
 		$data=$this->input->post(NULL ,true);
 		$email=$this->User->get_user($data);
 		if (count($email)>0) {
-			$error = "Your email exist.";
-			$this->load->view('/error.php',['error'=>$error]);
-		}
-		else{
-		$data=$this->User->edit_email($data);
-		redirect("/Activity/profile");
+			$data = array('error' => "This email exist !! Put your correct email",
+						  'result'=> $this->User->get_profile() 
+			);
+			$this->load->view('/profile.php',['data'=>$data]);
+		}else{
+			$this->load->library('form_validation');
+			$this->form_validation->set_rules('email','Email','trim|required|valid_email',array('required'=>'you must enter your  email','valid_email'=>'enter valid email'));
+
+			if ($this->form_validation->run()==false) {
+				$data = array('error' => "This email is incorrect !! Put your correct email",
+						  'result'=> $this->User->get_profile() 
+			);
+			$this->load->view('/profile.php',['data'=>$data]);
+			}
+
+			else{
+			$data=$this->User->edit_email($data);
+			redirect("/Activity/profile");
+			}
 		}
 	}
 
@@ -313,7 +339,8 @@ class Activity extends CI_Controller
 				'title'=>$data[$i]['title'],
 				'message'=>$data[$i]['message'],
 				'messages_id'=>$data[$i]['id'],
-				'comments'=>$this->User->get_all_comment($data[$i]['id'])
+				'comments'=>$this->User->get_all_comment($data[$i]['id']),
+				'getComments'=>$this->User->get_count_comments($data[$i]['id'])
 				)
 			);
 		}
@@ -434,6 +461,9 @@ class Activity extends CI_Controller
 			$posts=array();
 			$input=$this->input->post(NULL ,true);
 			$data=$this->User->activity_site($input);
+			if ($data === 0) {
+				redirect('/');
+			}else{
 			for ($i=0; $i <count($data) ; $i++) 
 			{
 				array_push($posts
@@ -449,7 +479,7 @@ class Activity extends CI_Controller
 			);
 			}
 			return $posts;
-			
+			}
 		}
 
 		public function load_chat(){
@@ -475,9 +505,11 @@ class Activity extends CI_Controller
               $class_name = "normal-message";
             }
             echo '<div class="'.$class_name.' col-lg-12">
-                    <h3>'.$chat['result'][$i]['first_name'].' '.$chat['result'][$i]['last_name']  .'</h3>
-                    <p>'.$chat['result'][$i]['chat'].'</p>
-                    <p>'.$chat['result'][$i]['created_at'].'</p>
+
+                    <h3>'. htmlspecialchars($chat['result'][$i]['first_name'].' '.$chat['result'][$i]['last_name']) .'</h3>
+                    <p>'. htmlspecialchars($chat['result'][$i]['chat']).'</p>
+                    <p>'. htmlspecialchars($chat['result'][$i]['created_at']).'</p>
+
                   </div>';
              }
               $last = end($chat['result'])['chat'];
@@ -581,15 +613,28 @@ class Activity extends CI_Controller
 
 
 	public function forget_password(){
+		if ($this->session->userdata('first_name')) {
+			redirect('/');
+		}else{
 		$this->load->view('/email.php');
+		}
 	}
 
 
 	public function check_email(){
 		$this->load->model('User');
 		$data = $this->input->post(NULL ,true);
+		if ($this->session->userdata('first_name')) {
+			redirect('/');
+		}
+		elseif (empty($data)) {
+				$error = 'please enter your email';
+				$this->load->view('/email.php',['error'=>$error]);
+			}
+		else{
 		$this->session->set_userdata(['r_email'=>$data['email']]);
 			$check = $this->User->check_email($data);
+			
 			if ($check) {
 				$characters = '0123456789abccdefghijklmnopkrstuvwxyzABCCDEFGHIJKLMNOPKRSTUVWXYZ';
 				$code = '';
@@ -597,19 +642,19 @@ class Activity extends CI_Controller
 					$code .= $characters[rand(0, strlen($characters)-1)];
 				}
 				$this->User->update_code($code);
-				$code_message = "Hello ".$this->session->userdata('r_email')." 
-				Someone has requested a code to change your password. You can do this through this code below.\r\n
+				$code_message = "Hello ".$this->session->userdata('r_email')." \r\n
+				Someone has requested a code to change your password. You can do this \r\n through this code below.\r\n
 				your code : ".$code."\r\n
 				If you didn't request this, please ignore this email.\r\n
-				Your password won't change until you enter this code above and create a new one.
+				Your password won't change until you enter this code above and create a \r\n new one.
 				";
 				$this->load->library('email');
 				
-				$this->email->from('anas@restart.network', 'Activity Team');
+				$this->email->from('No Reply@funider.com', 'Funider Team');
 				$this->email->to($this->session->userdata('r_email'));
 				//$this->email->cc('another@another-example.com');
 				//$this->email->bcc('them@their-example.com');
-				$this->email->set_header('Header1', 'Value1');
+				//$this->email->set_header('Header1', 'Value1');
 				$this->email->subject('your code is');
 				$this->email->message($code_message);
 
@@ -623,6 +668,7 @@ class Activity extends CI_Controller
 				$error = 'this email dose not exist';
 				$this->load->view('/email.php',['error'=>$error]);
 			}
+		}
 		
 	}
 
@@ -631,7 +677,14 @@ class Activity extends CI_Controller
 			$this->load->model('User');
 			$data = $this->input->post(NULL ,true);
 				$check = $this->User->check_code($data);
-				if ($check){
+				if ($this->session->userdata('first_name')) {
+					redirect('/');
+				}
+				elseif (empty($data)) {
+					$error ='please enter the code';
+					$this->load->view('/code.php',['error'=>$error]);
+				}
+				elseif ($check){
 					$this->load->view('/new_password.php');
 				}else{
 					$error ='this code is incorrect';
@@ -644,10 +697,13 @@ class Activity extends CI_Controller
 			$this->load->model('User');
 			$data= $this->input->post(NULL ,true);
 
-			$info = $data['email'];
+			$info = $this->session->userdata('r_email');
 			$password =$this->input->post('password' ,true);
 			$conf_password =$this->input->post('conf_password' ,true);
-			if (strlen($password)<8) {
+			if ($this->session->userdata('first_name')) {
+				redirect('/');
+			}
+			elseif (strlen($password)<8) {
 				$info = $error1 = "enter an password more than 8 chars";
 				$this->load->view('/new_password.php',['error1'=>$error1]);
 			}elseif ($password !== $conf_password) {
@@ -658,6 +714,51 @@ class Activity extends CI_Controller
 				$this->User->new_password($data);
 				redirect('/');
 			}
+		}
+
+		public function contact_us(){
+			$this->load->view('contact_us.php');
+		}
+
+		public function contact_pro(){
+			$this->load->library('form_validation');
+			$data= $this->input->post(NULL ,true);
+				$this->form_validation->set_rules('name','name','trim|required|min_length[3]',array('required'=>'you must enter your first name','min_length[3]'=>'enter an text more than 3 chars'));
+				$this->form_validation->set_rules('email','Email','trim|required|valid_email',array('required'=>'you must enter your  email','valid_email'=>'enter valid email'));
+
+				$this->form_validation->set_rules('subject','subject','trim|required|min_length[3]',array('required'=>'you must enter your last name','min_length[3]'=>'enter an text more than 3 chars'));
+
+				$this->form_validation->set_rules('message','message','trim|required|min_length[6]',array('required'=>'you must enter your post code','min_length[6]'=>'enter valid post code'));
+				if ($this->form_validation->run()==false)
+				{
+					$this->load->view('contact_us.php');
+				}
+				else
+				{
+					$name = $this->input->post('name' ,true);
+					$email=$this->input->post('email' ,true);
+					$subject = $this->input->post('subject' ,true);
+					$message = $this->input->post('message' ,true);
+					
+					$this->load->library('email');
+					$this->email->from($email, $name);
+					$this->email->to("mhd.anas.alrz@hotmail.com");
+					//$this->email->cc('another@another-example.com');
+					//$this->email->bcc('them@their-example.com');
+					//$this->email->set_header('Header1', 'Value1');
+					$this->email->subject("from funder submission 'contact us page' : ".$subject);
+					$this->email->message($message);
+
+					$result = $this->email->send();
+					if ($result) {
+						$done = "thank you";
+						$this->load->view('/contact_us.php',['done'=>$done]);
+					}else{
+						echo($this->email->print_debugger());
+					}
+				}
+				
+
 		}
 
 		//logoff
@@ -674,6 +775,16 @@ class Activity extends CI_Controller
 		public function logoff_activity(){
 			$this->session->sess_destroy();
 			redirect("/Activity/activity_page_load");
+		}
+
+		public function logoff_chat(){
+			$this->session->sess_destroy();
+			redirect("/Activity/load_chat");
+		}
+
+		public function logoff_about_us(){
+			$this->session->sess_destroy();
+			redirect("/Activity/about_us");
 		}
 }
 

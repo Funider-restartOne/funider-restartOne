@@ -2,14 +2,8 @@
 <html>
 <head>
 	<title><?php for ($i=0; $i <count($data['result']) ; $i++) { echo $data['result'][$i]['title']; }?></title>
-	<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
- 
-<link rel="stylesheet" href="/assests/css/style.css" type="text/css">
+	<?php $this->load->view('general.php'); ?>
+  <link rel="stylesheet" href="/assests/css/style.css" type="text/css">
 	<?= $data['map']['map']['js']; ?>
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbkD511n17yo1FAPojJ-8lK2-S3YYXIIs&callback=initMap"
   type="text/javascript"></script>
@@ -69,6 +63,7 @@
                         <div class="row">
                             <div class="container-fluid">
                                 <form class="" action="/index.php/Activity/login" method="post">
+                                <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
                                     <div class="form-group">
                                         <label class="">Email</label>
                                         <input class="form-control" name="email" id="username" type="text">
@@ -105,126 +100,18 @@
     </div>
 </nav>
 </header>
-
-<div class="clear"></div>
-
-<!-- /Upper Nav -Bar -->
-<div class="container-fluid"></div>
-    <div class="row">
-        <div class=" left-activity col-md-3">
-          <div class="nav-side-menu">
-              <div class="brand">Meet Up For Fun</div>
-              <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
-              <div class="menu-list">
-                  <ul id="menu-content" class="menu-content collapse out">
-                      <li>
-                          <a href="#">
-                              <i class="fa fa-bars fa-lg"></i> Activities
-                          </a>
-                      </li>
-                      <li data-toggle="collapse" data-target="#products" class="collapsed active">
-                          <a href="#"><i class="fa fa-futbol-o fa-lg"></i> Football <span class="arrow"></span></a>
-                      </li>
-                      <ul class="sub-menu collapse" id="products">
-                        <form action="/index.php/Activity/site_activity" method="post">
-                          <li class="active"><input style="background: #181C20;border: none;width: 80%;display: inline-block !important;" type="submit" name="football" value="Scheduled Activities">
-                          <input type="hidden" name="activity_name" value="football"></li>
-                        </form>
-                          <li><a href="/index.php/Activity/activity_page_load" class="click-table" onclick="myFunction()">Create  An Activity</a></li>
-                          <li><a href="/index.php/Activity/stories">Stories</a></li>
-                          <li><a href="/index.php/Activity/stories">Post a Story</a></li>
-                      </ul>
-                      <li data-toggle="collapse" data-target="#service" class="collapsed">
-                          <a href="#"><i class="fa fa-dribbble fa-lg"></i> Basketball <span class="arrow"></span></a>
-                      </li>
-                      <ul class="sub-menu collapse" id="service">
-                        <form action="/index.php/Activity/site_activity" method="post">
-                          <li class="active"><input style="background: #181C20;border: none;width: 80%;display: inline-block !important;" type="submit" name="football" value="Scheduled Activities">
-                          <input type="hidden" name="activity_name" value="basketball"></li>
-                        </form>
-                          <li><a href="/index.php/Activity/activity_page_load" onclick="myFunction()">Create An Activity</a></li>
-                          <li><a href="/index.php/Activity/stories">Stories</a></li>
-                          <li><a href="/index.php/Activity/stories">Post a Story</a></li>
-                      </ul>
-
-
-                      <li data-toggle="collapse" data-target="#new" class="collapsed">
-                          <a href="#"><i class="fa fa-bicycle fa-lg"></i> Cycling <span class="arrow"></span></a>
-                      </li>
-                      <ul class="sub-menu collapse" id="new">
-                        <form action="/index.php/Activity/site_activity" method="post">
-                          <li class="active"><input style="background: #181C20;border: none;width: 80%;display: inline-block !important;" type="submit" name="football" value="Scheduled Activities">
-                          <input type="hidden" name="activity_name" value="cycling"></li>
-                        </form>
-                          <li><a href="/index.php/Activity/activity_page_load" onclick="myFunction()">Create  An Activity</a></li>
-                          <li><a href="/index.php/Activity/stories">Stories</a></li>
-                          <li><a href="/index.php/Activity/stories">Post a Story</a></li>
-                      </ul>
-
-                      <li data-toggle="collapse" data-target="#running" class="collapsed">
-                          <a href="#"><i class="fa fa-child fa-lg"></i> Running <span class="arrow"></span></a>
-                      </li>
-                      <ul class="sub-menu collapse" id="running">
-                        <form action="/index.php/Activity/site_activity" method="post">
-                          <li class="active"><input style="background: #181C20;border: none;width: 80%;display: inline-block !important;" type="submit" name="football" value="Scheduled Activities">
-                          <input type="hidden" name="activity_name" value="running"></li>
-                        </form>
-                          <li><a href="/index.php/Activity/activity_page_load" onclick="myFunction()">Create An Activity</a></li>
-                          <li><a href="/index.php/Activity/stories">Stories</a></li>
-                          <li><a href="/index.php/Activity/stories">Post a Story</a></li>
-                      </ul>
-
-                      <li data-toggle="collapse" data-target="#hockey" class="collapsed">
-                          <a href="#"><i class="fa fa-legal fa-lg"></i> Hockey <span class="arrow"></span></a>
-                      </li>
-                      <ul class="sub-menu collapse" id="hockey">
-                        <form action="/index.php/Activity/site_activity" method="post">
-                          <li class="active"><input style="background: #181C20;border: none;width: 80%;display: inline-block !important;" type="submit" name="football" value="Scheduled Activities">
-                          <input type="hidden" name="activity_name" value="hockey"></li>
-                        </form>
-                          <li><a href="/index.php/Activity/activity_page_load" onclick="myFunction()">Create  An Activity</a></li>
-                          <li><a href="/index.php/Activity/stories">Stories</a></li>
-                          <li><a href="/index.php/Activity/stories">Post a Story</a></li>
-                      </ul>
-
-                      <li data-toggle="collapse" data-target="#bowling" class="collapsed">
-                          <a href="#"><i class="fa fa-renren fa-lg"></i> Bowling <span class="arrow"></span></a>
-                      </li>
-                      <ul class="sub-menu collapse" id="bowling">
-                        <form action="/index.php/Activity/site_activity" method="post">
-                          <li class="active"><input style="background: #181C20;border: none;width: 80%;display: inline-block !important;" type="submit" name="football" value="Scheduled Activities">
-                          <input type="hidden" name="activity_name" value="basketball"></li>
-                        </form>
-                          <li><a href="/index.php/Activity/activity_page_load" onclick="myFunction()">Create An Activity</a></li>
-                          <li><a href="/index.php/Activity/stories">Stories</a></li>
-                          <li><a href="/index.php/Activity/stories">Post a Story</a></li>
-                      </ul>
-
-                      <li>
-                          <a href="#">
-                              <i class="fa fa-info fa-lg"></i> Guide
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <i class="fa fa-database fa-lg"></i> Sport fields data
-                          </a>
-                      </li>
-                  </ul>
-              </div>
-            </div>
-        </div>
-        <div class="right-activity col-md-9" style='padding-left: 20px; margin-bottom: 20px;'>
+<?php $this->load->view('activity_bar.php'); ?>
+        <div class="right-activity col-md-9 col-sm-12" style='padding-left: 20px; margin-bottom: 20px;'>
             <div class="row">
 <?php for ($i=0; $i <count($data['result']) ; $i++) { ?>
-                	<h2><?= $data['result'][$i]['title'] ?></h2>
-                    <p>type of activity : <?= $data['result'][$i]['type_of_activity'] ?></p>
-                    <p>activity date : <?= $data['result'][$i]['activity_date'] ?></p> 
-                    <p>start and end time : <?= $data['result'][$i]['start_time']." - ".$data['result'][$i]['end_time'] ?></p> 
-                    <p>address : <?= $data['result'][$i]['meeting_address'] ?></p>
-                    <p>post code : <?= $data['result'][$i]['Postcode'] ?></p>
-                    <p> Description : <?= $data['result'][$i]['Description'] ?></p>
-                    <p><?= $data['result'][$i]['getParticipants'] ?>:Participants</p>
+                	<h2><?=  htmlspecialchars($data['result'][$i]['title']) ?></h2>
+                    <p><b>type of activity :</b> <?=  htmlspecialchars($data['result'][$i]['type_of_activity']) ?></p>
+                    <p><b>activity date :</b> <?=  htmlspecialchars($data['result'][$i]['activity_date']) ?></p> 
+                    <p><b>start and end time :</b> <?=  htmlspecialchars($data['result'][$i]['start_time']." - ".$data['result'][$i]['end_time']) ?></p> 
+                    <p><b>address :</b> <?=  htmlspecialchars($data['result'][$i]['meeting_address']) ?></p>
+                    <p><b>post code :</b> <?=  htmlspecialchars($data['result'][$i]['Postcode']) ?></p>
+                    <p> <b>Description :</b> <?=  htmlspecialchars($data['result'][$i]['Description']) ?></p>
+                    <p><?= htmlspecialchars($data['result'][$i]['getParticipants']) ?>:Participants</p>
                     <input type="hidden" name="activity_id" value="<?= $data['result'][$i]['id'] ?>">
                     <?php 
                     for ($j=0; $j <count($data['result'][$i]['Participants']) ; $j++) { 
@@ -233,12 +120,14 @@
                       if ($data['result'][$i]['Participants'] === "not going") {
                         ?>
                     <form  class="form-inline form-activity" action="/index.php/Activity/insert_Participants" method="post">
+                    <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
                       <button style='margin-bottom: 20px;' type="submit" name="im_going" class="btn btn-default"><i class="fa fa-user-plus" aria-hidden="true"></i></button>
                       <input  type="hidden" name="activity_id" value="<?= $data['result'][$i]['id'] ?>">
                     </form>
                     <?php 
                       }else{
                      ?><form action="/index.php/Activity/delete_Participants" method="post" >
+                     <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
                       <button style='margin-bottom: 20px;' type="submit" name="im_not_going" class="btn btn-default"><i class="fa fa-user-times" aria-hidden="true"></i></button>
                       <input type="hidden" name="activity_id" value="<?=$data['result'][$i]['id']?>">
                     </form>
@@ -253,31 +142,8 @@
               </div>
             </div>
             </div>
-    <footer id="footer" class="midnight-blue">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6">
-                    &copy; 2017 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">Funider</a>.
-                </div>
-                <div class="col-sm-6">
-                    <ul class="pull-right">
-                        <li><a href="/index.php/Activity">Home</a></li>
-                        <li><a href="/index.php/Activity/activity_page_load">Activities</a></li>
-                        <li><a href="/index.php/Activity/about_us">Stories</a></li>
-                        <li><a href="/index.php/Activity/about_us">About Us</a></li>
-                        <li><a href="#">Contact Us</a></li>                        
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<script src="/assests/javascript/carousel.js"></script>
+
+<?php $this->load->view('footer.php'); ?>
 
 </body>
 </html>
