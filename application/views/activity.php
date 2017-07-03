@@ -176,7 +176,7 @@
                 <div class="col-md-3 activity-box">
                 <form action="/index.php/Activity/map" method="post">
                 <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
-                    <button><p><?=  htmlspecialchars($posts['result'][$i]['type_of_activity']) ?></p></button> 
+                    <button class="btn btn-success"><p><?=  htmlspecialchars($posts['result'][$i]['type_of_activity']) ?></p></button> 
                     <p><?=  htmlspecialchars($posts['result'][$i]['activity_date']) ?></p> 
                     <p><?=  htmlspecialchars($posts['result'][$i]['start_time']." - ".$posts['result'][$i]['end_time']) ?></p> 
                     <p><?=  htmlspecialchars($posts['result'][$i]['getParticipants']) ?>:Participants</p>
@@ -190,7 +190,7 @@
                         ?>
                     <form  class="form-inline form-activity" action="/index.php/Activity/insert_Participants" method="post">
                     <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
-                      <button type="submit" style="color: green;" name="im_going" class="btn btn-default"><i class="fa fa-user-plus" aria-hidden="true"></i></button>
+                      <button type="submit" style="color: #55AF55;" name="im_going" class="btn btn-default"><i class="fa fa-user-plus" aria-hidden="true"></i></button>
                       <input type="hidden" name="activity_id" value="<?= $posts['result'][$i]['id'] ?>">
                     </form>
                     <?php 
