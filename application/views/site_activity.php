@@ -111,7 +111,7 @@
                           <?php for ($i=0; $i <count($posts['result']) ; $i++) { ?>
                           <div class="col-md-3 col-sm-3 activity-box">
                               <form action="/index.php/Activity/map" method="post">
-                                <button><p><?= $posts['result'][$i]['type_of_activity'] ?></p></button> 
+                                <button class="btn btn-success"><p><?= $posts['result'][$i]['type_of_activity'] ?></p></button> 
                                 <p><?= $posts['result'][$i]['activity_date'] ?></p> 
                                 <p><?= $posts['result'][$i]['start_time']." - ".$posts['result'][$i]['end_time'] ?></p> 
                                 <p><?= $posts['result'][$i]['getParticipants'] ?>:Participants</p>
@@ -125,14 +125,14 @@
                                 if ($posts['result'][$i]['Participants'] === "not going") {
                                   ?>
                               <form  class="form-inline form-activity" action="/index.php/Activity/insert_Participants" method="post">
-                                <button type="submit" name="im_going" class="btn btn-default"><i class="fa fa-user-plus" aria-hidden="true"></i></button>
+                                <button type="submit" name="im_going" class="btn btn-default"><i class="fa fa-user-plus" style="color: #55AF55;" aria-hidden="true"></i></button>
                                 <input type="hidden" name="activity_id" value="<?= $posts['result'][$i]['id'] ?>">
                                 <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" />
                               </form>
                               <?php 
                                 }else{
                                ?><form action="/index.php/Activity/delete_Participants" method="post" >
-                                <button type="submit" name="im_not_going" class="btn btn-default"><i class="fa fa-user-times" aria-hidden="true"></i></button>
+                                <button type="submit" name="im_not_going" class="btn btn-default"><i class="fa fa-user-times" style="color: #c70505;" aria-hidden="true"></i></button>
                                 <input type="hidden" name="activity_id" value="<?=$posts['result'][$i]['id']?>">
                                 <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" />
                               </form>

@@ -116,7 +116,7 @@
                         <div class="col-md-3 col-sm-3 activity-box">
                             <form action="/index.php/Activity/map" method="post">
                             <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>" />
-                                <button><p><?= $posts['result'][$i]['type_of_activity'] ?></p></button> 
+                                <button class="btn btn-success"><p><?= $posts['result'][$i]['type_of_activity'] ?></p></button> 
                                 <p><?= $posts['result'][$i]['activity_date'] ?></p> 
                                 <p><?= $posts['result'][$i]['start_time']." - ".$posts['result'][$i]['end_time'] ?></p> 
                                 <p><?= $posts['result'][$i]['getParticipants'] ?>:Participants</p>

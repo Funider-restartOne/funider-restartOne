@@ -505,9 +505,11 @@ class Activity extends CI_Controller
               $class_name = "normal-message";
             }
             echo '<div class="'.$class_name.' col-lg-12">
+
                     <h3>'. htmlspecialchars($chat['result'][$i]['first_name'].' '.$chat['result'][$i]['last_name']) .'</h3>
                     <p>'. htmlspecialchars($chat['result'][$i]['chat']).'</p>
                     <p>'. htmlspecialchars($chat['result'][$i]['created_at']).'</p>
+
                   </div>';
              }
               $last = end($chat['result'])['chat'];
